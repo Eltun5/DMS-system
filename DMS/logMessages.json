@@ -1,0 +1,60 @@
+{
+  "log" : {
+    "user" : {
+      "service" : {
+        "create" : {
+          "try": "Someone try to create a user.",
+          "exist": {
+            "email": "User with this email already exists. Email : ",
+            "full-name": "User with this full name already exists. Full name : ",
+            "phone-number": "User with this phone number already exists. Phone number : "
+          },
+          "success": "User created successfully."
+        },
+        "get-by-id": "Someone try to get a user by id. Id : ",
+        "get-by-email": "Someone try to get a user by email. Email : ",
+        "get-by-full-name": "Someone try to get a user by full name. Full name : ",
+        "get-by-phone-number": "Someone try to get a user by phone number. Phone number : ",
+        "get-all": "Someone try to get all users.",
+        "change-password": {
+          "try": "Someone try to change password.",
+          "user-not-found-by-email": "User is not found. Email : ",
+          "wrong-old-password": "Old password is wrong.",
+          "success": "Password changed successfully."
+        },
+        "update": {
+          "try": "Someone try to update a user."
+        },
+        "delete": "Someone try to delete a user. Id : "
+      }
+    },
+    "auth": {
+      "service": {
+        "login":  {
+          "try": "Someone try to login. Email : ",
+          "user-not-found-by-email": "Email is wrong. Email : ",
+          "password-expired": "Password is expired. Please change your password.",
+          "wrong-password": "Password is wrong."
+        },
+        "register": "Someone try to register. Email : ",
+        "logout": "Some user try to logout. UserId : " 
+      }
+    },
+    "background-service": {
+      "try": "CustomBackgroundService is working.",
+      "clean-password": {
+        "success": "Old user password histories deleted.",
+        "nothing-to-clean": "No old user password histories found."
+      },
+      "check-employees-salary": "Check employees who are not logged in for 1 month.",
+      "pay-employees-salary": "Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: "
+    },
+    "Jwt": {
+      "access-token": "AccessToken generated. AccessToken : ",
+      "refresh-token": "RefreshToken generated. RefreshToken : ",
+      "invalid-token": "Token is invalid : ",
+      "get-email": "Get email from token. Email : ",
+      "get-user-id": "Get user id from token. User ID : "
+    }
+  }
+}
