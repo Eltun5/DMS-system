@@ -20,7 +20,8 @@ public class SqlUserRepository : IUserRepository
         return user;
     }
 
-    public User GetUserById(string id) => _dbContext.Users.Find(id);
+    public User GetUserById(string id) => 
+        _dbContext.Users.FirstOrDefault(user => user.Id.ToString().Equals(id));
 
     public User GetUserByEmail(string email) =>
         _dbContext.Users.FirstOrDefault(user => user.Email.Equals(email));

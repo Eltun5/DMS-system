@@ -1,12 +1,14 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DepartmentManagementApp.API.Controllers;
 
-[Route("api/test")]
+[Route("api/v1/test")]
 [ApiController]
 public class TestController : ControllerBase
 {
     [HttpGet]
+    [Authorize]
     public string Get()
     {
         return "Hello!";
@@ -31,6 +33,7 @@ public class TestController : ControllerBase
     }
     
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public string Delete(int id)
     {
         return "Hello Delete id : " + id;

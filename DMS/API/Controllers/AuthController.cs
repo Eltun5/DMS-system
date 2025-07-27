@@ -26,18 +26,18 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request)
     {
         var response = await _authService.login(request);
-        return  Ok(response);
+        return Ok(response);
     }
 
     [HttpPost("refresh")]
-    public async Task<ActionResult<LoginResponse>> RefreshToken(string refreshToken)
+    public async Task<ActionResult<LoginResponse>> RefreshToken([FromBody] string refreshToken)
     {
         var response = await _authService.refreshToken(refreshToken);
         return Ok(response);
     }
 
     [HttpPost("logout")]
-    public async Task Logout(string refreshToken)
+    public async Task Logout([FromBody] string refreshToken)
     {
         await _authService.logout(refreshToken);
     }

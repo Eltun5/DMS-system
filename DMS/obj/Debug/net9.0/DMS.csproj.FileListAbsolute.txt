@@ -173,3 +173,4 @@
 /home/eltun/RiderProjects/WebApplication1/DMS/obj/Debug/net9.0/DMS.pdb
 /home/eltun/RiderProjects/WebApplication1/DMS/obj/Debug/net9.0/DMS.genruntimeconfig.cache
 /home/eltun/RiderProjects/WebApplication1/DMS/obj/Debug/net9.0/ref/DMS.dll
+/home/eltun/RiderProjects/WebApplication1/DMS/obj/Debug/net9.0/DMS.sourcelink.json
