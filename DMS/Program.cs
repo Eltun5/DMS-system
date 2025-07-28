@@ -7,11 +7,13 @@ using DepartmentManagementApp.Infrastructure.DBContext;
 using DepartmentManagementApp.Infrastructure.Interfaces;
 using DepartmentManagementApp.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using Serilog;
 using StackExchange.Redis;
+using WebApplication1;
 using Role = DepartmentManagementApp.Domain.Enums.Role;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,6 +55,9 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
     var configuration = builder.Configuration.GetSection("ConnectionStrings")["Redis"];
     return ConnectionMultiplexer.Connect(configuration);
 });
+
+builder.Services.AddSignalR();
+builder.Services.AddSingleton<IUserIdProvider, IdBasedUserIdProvider>();
 
 var app = builder.Build();
 
@@ -108,6 +113,8 @@ using (var scope = app.Services.CreateScope())
         Log.Information($"Initialization error: {ex.Message}");
     }
 }
+
+app.MapHub<ChatHub>("chat-hub");
 
 app.UseHttpsRedirection();
 

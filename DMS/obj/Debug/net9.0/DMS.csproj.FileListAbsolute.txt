@@ -174,3 +174,12 @@
 /home/eltun/RiderProjects/WebApplication1/DMS/obj/Debug/net9.0/DMS.genruntimeconfig.cache
 /home/eltun/RiderProjects/WebApplication1/DMS/obj/Debug/net9.0/ref/DMS.dll
 /home/eltun/RiderProjects/WebApplication1/DMS/obj/Debug/net9.0/DMS.sourcelink.json
+/home/eltun/RiderProjects/WebApplication1/DMS/bin/Debug/net9.0/Microsoft.AspNetCore.Connections.Abstractions.dll
+/home/eltun/RiderProjects/WebApplication1/DMS/bin/Debug/net9.0/Microsoft.AspNetCore.Http.Connections.Client.dll
+/home/eltun/RiderProjects/WebApplication1/DMS/bin/Debug/net9.0/Microsoft.AspNetCore.Http.Connections.Common.dll
+/home/eltun/RiderProjects/WebApplication1/DMS/bin/Debug/net9.0/Microsoft.AspNetCore.SignalR.Client.dll
+/home/eltun/RiderProjects/WebApplication1/DMS/bin/Debug/net9.0/Microsoft.AspNetCore.SignalR.Client.Core.dll
+/home/eltun/RiderProjects/WebApplication1/DMS/bin/Debug/net9.0/Microsoft.AspNetCore.SignalR.Common.dll
+/home/eltun/RiderProjects/WebApplication1/DMS/bin/Debug/net9.0/Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+/home/eltun/RiderProjects/WebApplication1/DMS/bin/Debug/net9.0/Microsoft.Extensions.Features.dll
+/home/eltun/RiderProjects/WebApplication1/DMS/bin/Debug/net9.0/System.Net.ServerSentEvents.dll

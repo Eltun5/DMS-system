@@ -48,8 +48,9 @@ public class UserController : ControllerBase
         return _userService.GetUserByPhoneNumber(phoneNumber);
     }
 
-    [HttpPut("{id}")]
-    public UserResponse UpdateUser(string id, RegisterRequest request)
+    [HttpPut("/{id}")]
+    public UserResponse UpdateUser(string id,
+        RegisterRequest request)
     {
         return _userService.UpdateUser(id, request);
     }
