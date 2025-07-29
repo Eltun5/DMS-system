@@ -37,7 +37,7 @@ public class ChatHub : Hub
     }
 
 
-    public async Task SendMessageToEmail(string receiverId, string message)
+    public async Task SendMessageToId(string receiverId, string message)
     {
         var newMessage = new Message
         {

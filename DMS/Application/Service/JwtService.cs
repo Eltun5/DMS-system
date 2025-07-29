@@ -23,10 +23,13 @@ public class JwtService : IJwtService
 
     public LoginResponse GenerateToken(User user)
     {
-        return new LoginResponse(GenerateAccessToken(user),int.Parse(_config["Jwt:ExpiresInMinutes"]!), GenerateRefreshToken(user));
+        return new LoginResponse(
+            GenerateAccessToken(user),
+            int.Parse(_config["Jwt:ExpiresInMinutes"]!), 
+            GenerateRefreshToken(user));
     }
     
-    public string? getUserIdFromToken(string token)
+    public string? GetUserIdFromToken(string token)
     {
         var decodedPrincipal = DecodeJwtToken(token);
 
@@ -42,7 +45,7 @@ public class JwtService : IJwtService
         return null;
     }
     
-    public string? getEmailFromToken(string token)
+    public string? GetEmailFromToken(string token)
     {
         var decodedPrincipal = DecodeJwtToken(token);
 
@@ -68,8 +71,8 @@ public class JwtService : IJwtService
             new Claim(ClaimTypes.Email, user.Email)
         };
 
-        var key = new SymmetricSecurityKey(this.key);
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
+        var symmetricSecurityKey = new SymmetricSecurityKey(this.key);
+        var creds = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha512);
         var expires = DateTime.Now.AddMinutes(Convert.ToDouble(_config["Jwt:ExpiresInMinutes"]));
 
         var token = new JwtSecurityToken(
@@ -95,8 +98,8 @@ public class JwtService : IJwtService
             new Claim(ClaimTypes.Email, user.Email)
         };
 
-        var key = new SymmetricSecurityKey(this.key);
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
+        var symmetricSecurityKey = new SymmetricSecurityKey(this.key);
+        var creds = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha512);
         var expires = DateTime.Now.AddMinutes(Convert.ToDouble(_config["Jwt:ExpiresInMinutes"]));
 
         var token = new JwtSecurityToken(
@@ -121,14 +124,16 @@ public class JwtService : IJwtService
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(key),
-            ValidateIssuer = true,
-            ValidateAudience = true,
+            ValidateIssuer = false,
+            ValidateAudience = false,
             ClockSkew = TimeSpan.Zero
         };
 
         try
         {
+            Log.Information("break point on token");
             var principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+            Log.Information("break point on token validated");
             return principal;
         }
         catch (Exception ex)

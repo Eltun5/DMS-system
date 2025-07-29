@@ -16,14 +16,28 @@
         "get-by-full-name": "Someone try to get a user by full name. Full name : ",
         "get-by-phone-number": "Someone try to get a user by phone number. Phone number : ",
         "get-all": "Someone try to get all users.",
+        "get-all-roles": "Someone try to get all users for corresponding role.",
+        "get-active-user": "Someone try to get active users list.",
+        "get-deactivate-user": "Someone try to get deactivated users list.",
+        "get-deleted-user": "Someone try to get deleted users list.",
         "change-password": {
           "try": "Someone try to change password.",
-          "user-not-found-by-email": "User is not found. Email : ",
+          "user-not-found-by-user-id": "User is not found. User id : ",
           "wrong-old-password": "Old password is wrong.",
+          "wrong-old-password-exception": "Old password is wrong. Please enter correct password.",
           "success": "Password changed successfully."
         },
+        "add-department": "Someone try to add department.",
+        "remove-department": "Someone try to remove department.",
+        "change-user-salary": "Someone try to change salary.",
+        "change-user-role": "Someone try to change role.",
+        "deactivate-user": "Someone try to deactivate user.",
+        "activate-user": "Someone try to activate user.",
+        "verify-user": "Someone try to verify user.",
         "update": {
-          "try": "Someone try to update a user."
+          "try": "Someone try to update a user.",
+          "user-not-found": "User is not found.",
+          "success": "User successfully updated."
         },
         "delete": "Someone try to delete a user. Id : "
       }

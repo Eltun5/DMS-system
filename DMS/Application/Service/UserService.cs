@@ -24,87 +24,172 @@ public class UserService : IUserService
         _config = config;
     }
 
-    public UserResponse CreateUser(RegisterRequest request)
+    public async Task<UserResponseWithDepartments> CreateUser(RegisterRequest request)
     {
         Log.Information(_config["log:user:service:create:try"]!);
         VerifyCanCreateUserWithThisField(request);
 
         var user = InitializeUser(request);
 
-        var response = _mapper.Map<UserResponse>(_userRepository.CreateUser(user));
+        var response = _mapper.Map<UserResponseWithDepartments>(await _userRepository.CreateUser(user));
         Log.Information(_config["log:user:service:create:success"]!);
         return response;
     }
 
-    public UserResponse GetUserById(string id)
+    public async Task<UserResponseWithDepartments> GetUserById(string id)
     {
         Log.Information(_config["log:user:service:get-by-id"]! + id);
-        return _mapper.Map<UserResponse>(_userRepository.GetUserById(id));
+        return _mapper.Map<UserResponseWithDepartments>(await _userRepository.GetUserById(id));
     }
 
-    public UserResponse GetUserByEmail(string email)
+    public async Task<UserResponseWithDepartments> GetUserByEmail(string email)
     {
         Log.Information(_config["log:user:service:get-by-email"]! + email);
-        return _mapper.Map<UserResponse>(_userRepository.GetUserByEmail(email));
+        return _mapper.Map<UserResponseWithDepartments>(await _userRepository.GetUserByEmail(email));
     }
 
-    public UserResponse GetUserByUserName(string fullName)
+    public async Task<UserResponseWithDepartments> GetUserByUserName(string fullName)
     {
         Log.Information(_config["log:user:service:get-by-full-name"]! + fullName);
-        return _mapper.Map<UserResponse>(_userRepository.GetUserByUserName(fullName));
+        return _mapper.Map<UserResponseWithDepartments>(await _userRepository.GetUserByUserName(fullName));
     }
 
-    public UserResponse GetUserByPhoneNumber(string phoneNumber)
+    public async Task<UserResponseWithDepartments> GetUserByPhoneNumber(string phoneNumber)
     {
         Log.Information(_config["log:user:service:get-by-phone-number"]! + phoneNumber);
-        return _mapper.Map<UserResponse>(_userRepository.GetUserByPhoneNumber(phoneNumber));
+        return _mapper.Map<UserResponseWithDepartments>(await _userRepository.GetUserByPhoneNumber(phoneNumber));
     }
 
-    public IEnumerable<UserResponse> GetAllUsers()
+    public async Task<IEnumerable<UserResponseWithDepartments>> GetAllUsers()
     {
         Log.Information(_config["log:user:service:get-all"]!);
-        return _mapper.Map<List<User>, List<UserResponse>>(_userRepository.GetAllUsers());
+        return _mapper.Map<IEnumerable<User>, IEnumerable<UserResponseWithDepartments>>(await _userRepository.GetAllUsers());
     }
 
-    public string ChangePassword(string email, string oldPassword, string newPassword)
+    public async Task<IEnumerable<UserResponseWithDepartments>> GetAllUsersByRole(string role)
+    {
+        Log.Information(_config["log:user:service:get-all-roles"]!);
+        Role role1 = (Role)Enum.Parse(typeof(Role), role);
+        return _mapper.Map<IEnumerable<User>, IEnumerable<UserResponseWithDepartments>>(
+            await _userRepository.GetAllUsersByRole(role1));
+    }
+
+    public async Task<IEnumerable<UserResponseWithDepartments>> GetActiveUsers()
+    {
+        Log.Information(_config["log:user:service:get-active-user"]!);
+        return _mapper.Map<IEnumerable<User>, IEnumerable<UserResponseWithDepartments>>(await _userRepository.GetActiveUsers());
+    }
+
+    public async Task<IEnumerable<UserResponseWithDepartments>> GetDeactivateUsers()
+    {
+        Log.Information(_config["log:user:service:get-deactivated-user"]!);
+        return _mapper.Map<IEnumerable<User>, IEnumerable<UserResponseWithDepartments>>(await _userRepository.GetDeactivateUsers());
+    }
+
+    public async Task<IEnumerable<UserResponseWithDepartments>> GetDeletedUsers()
+    {
+        Log.Information(_config["log:user:service:get-deleted-user"]!);
+        return _mapper.Map<IEnumerable<User>, IEnumerable<UserResponseWithDepartments>>(await _userRepository.GetDeletedUsers());
+    }
+
+    public async Task<string> ChangePassword(ChangePasswordRequest request)
     {
         Log.Information(_config["log:user:service:change-password:try"]!);
-        var user = _userRepository.GetUserByEmail(email);
+        var user = await _userRepository.GetById(request.userId);
         
         if (user == null)
         {
-            Log.Information(_config["log:user:service:change-password:user-not-found-by-email"]! + email);
+            Log.Information(_config["log:user:service:change-password:user-not-found-by-user-id"]! + request.userId);
             throw new ArgumentException("User is not found.");
         }
 
-        if (!BCrypt.Net.BCrypt.Verify(oldPassword, user.Password))
+        if (!BCrypt.Net.BCrypt.Verify(request.oldPassword, user.Password))
         {
             Log.Information(_config["log:user:service:change-password:wrong-old-password"]!);
-            throw new ArgumentException("Old password is wrong. Please enter correct password.");
+            throw new ArgumentException(_config["log:user:service:change-password:wrong-old-password-exception"]!);
         }
         
-        user.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
-        user.nextTimeToChangePassword = DateTime.Now.AddDays(30);
+        user.Password = BCrypt.Net.BCrypt.HashPassword(request.newPassword);
+        user.NextTimeToChangePassword = DateTime.Now.AddDays(30);
         user.UpdatedAt = DateTime.Now;
+        
+        await _userRepository.UpdateUserPassword(user);
         
         return _config["log:user:service:change-password:success"]!;
     }
 
-    public UserResponse UpdateUser(string id, RegisterRequest request)
+    public async Task<UserResponseWithDepartments> AddDepartmentInUser(string userId, string departmentId)
     {
-        Log.Information(_config["log:user:service:update:try"]!);
-        
-        return null;
+        Log.Information(_config["log:user:service:add-department"]!);
+        return _mapper.Map<UserResponseWithDepartments>(await _userRepository.AddDepartmentInUser(userId, departmentId));
     }
 
-    public void DeleteUser(string id)
+    public async Task<UserResponseWithDepartments> RemoveDepartmentInUser(string userId, string departmentId)
+    {
+        Log.Information(_config["log:user:service:remove-department"]!);
+        return _mapper.Map<UserResponseWithDepartments>(await _userRepository.RemoveDepartmentInUser(userId, departmentId));
+    }
+
+    public async Task<UserResponseWithDepartments> ChangeUserSalary(string userId, int salary)
+    {
+        Log.Information(_config["log:user:service:change-user-salary"]!);
+        return _mapper.Map<UserResponseWithDepartments>(await _userRepository.ChangeUserSalary(userId, salary));
+    }
+
+    public async Task<UserResponseWithDepartments> ChangeUserRole(string userId, string role)
+    {
+        Log.Information(_config["log:user:service:change-user-role"]!);
+        Role role1 = (Role)Enum.Parse(typeof(Role), role);
+        return _mapper.Map<UserResponseWithDepartments>(await _userRepository.ChangeUserRole(userId, role1));
+    }
+
+    public async Task<UserResponseWithDepartments> DeactivateUser(string userId)
+    {
+        Log.Information(_config["log:user:service:deactivate-user"]!);
+        return _mapper.Map<UserResponseWithDepartments>(await _userRepository.DeactivateUser(userId));
+    }
+
+    public async Task<UserResponseWithDepartments> ActivateUser(string userId)
+    {
+        Log.Information(_config["log:user:service:activate-user"]!);
+        return _mapper.Map<UserResponseWithDepartments>(await _userRepository.ActivateUser(userId));
+    }
+
+    public async Task<UserResponseWithDepartments> VerifyUser(string userId, string code)
+    {
+        Log.Information(_config["log:user:service:verify-user"]!);
+        
+        //some verification 
+        
+        return _mapper.Map<UserResponseWithDepartments>(await _userRepository.VerifyUser(userId));
+    }
+
+    public async Task<UserResponseWithDepartments> UpdateUser(string userId, UpdateUserRequest request)
+    {
+        Log.Information(_config["log:user:service:update:try"]!);
+
+        var user = await _userRepository.GetById(userId);
+
+        if (user == null) 
+            throw new ArgumentException(_config["log:user:service:update:user-not-found"]!);
+
+        var updatedUser = MapRequestToUserForUpdate(user, request);
+
+        var newUser = await _userRepository.UpdateUser(updatedUser);
+        
+        Log.Information(_config["log:user:service:update:success"]!);
+        
+        return _mapper.Map<UserResponseWithDepartments>(newUser);
+    }
+
+    public async Task DeleteUser(string id)
     {
         Log.Information(_config["log:user:service:delete"]! + id);
-        var user = _userRepository.GetUserById(id);
+        var user = await _userRepository.GetById(id);
         if (user != null)
         {
             user.IsDeleted = true;
-            _userRepository.UpdateUser(user);
+            await _userRepository.UpdateUser(user);
         }
     }
 
@@ -130,8 +215,20 @@ public class UserService : IUserService
         user.IsVerified = false;
         user.Salary = 0;
         user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
-        user.nextTimeToChangePassword = DateTime.Now.AddDays(30);
+        user.NextTimeToChangePassword = DateTime.Now.AddDays(30);
         user.Role = Role.Employee;
+        return user;
+    }
+
+    private User MapRequestToUserForUpdate(User user, UpdateUserRequest request)
+    {
+        user.FullName = request.FullName;
+        user.Email = request.Email;
+        user.Age = request.Age;
+        user.PhoneNumber = request.PhoneNumber;
+        user.Location = request.Location;
+        user.AdditionalInfo = request.AdditionalInfo;
+
         return user;
     }
 }

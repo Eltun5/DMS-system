@@ -5346,11 +5346,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/eltun/RiderProjects/WebApplication1/DMS/DMS.csproj",
+      "projectUniqueName": "/home/eltun/RiderProjects/DMS/DMS/DMS.csproj",
       "projectName": "DMS",
-      "projectPath": "/home/eltun/RiderProjects/WebApplication1/DMS/DMS.csproj",
+      "projectPath": "/home/eltun/RiderProjects/DMS/DMS/DMS.csproj",
       "packagesPath": "/home/eltun/.nuget/packages/",
-      "outputPath": "/home/eltun/RiderProjects/WebApplication1/DMS/obj/",
+      "outputPath": "/home/eltun/RiderProjects/DMS/DMS/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/eltun/.nuget/NuGet/NuGet.Config"

@@ -7,7 +7,7 @@ public interface IJwtService
 {
     LoginResponse GenerateToken(User user);
     
-    string? getUserIdFromToken(string token);
+    string? GetUserIdFromToken(string token);
     
-    string? getEmailFromToken(string token);
+    string? GetEmailFromToken(string token);
 }

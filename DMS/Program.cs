@@ -5,7 +5,6 @@ using DepartmentManagementApp.Application.Service;
 using DepartmentManagementApp.Domain.Models;
 using DepartmentManagementApp.Infrastructure.DBContext;
 using DepartmentManagementApp.Infrastructure.Interfaces;
-using DepartmentManagementApp.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +13,7 @@ using Scalar.AspNetCore;
 using Serilog;
 using StackExchange.Redis;
 using WebApplication1;
+using WebApplication1.Infrastructure.Repositories;
 using Role = DepartmentManagementApp.Domain.Enums.Role;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,15 +21,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserRepository, SqlUserRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRedisTokenService, RedisTokenService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddAutoMapper(cfg => { }, typeof(UserMapper).Assembly);
+builder.Services.AddAutoMapper(cfg => { }, typeof(CustomMapper).Assembly);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -101,7 +102,7 @@ using (var scope = app.Services.CreateScope())
                 IsActive = true,
                 IsDeleted = false,
                 IsVerified = false,
-                nextTimeToChangePassword = DateTime.Now.AddDays(30)
+                NextTimeToChangePassword = DateTime.Now.AddDays(30)
             });
             context.SaveChanges();
         }

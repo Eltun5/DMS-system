@@ -5,12 +5,18 @@ using DepartmentManagementApp.Domain.Models;
 
 namespace DepartmentManagementApp.Application.Mappers;
 
-public class UserMapper: Profile
+public class CustomMapper: Profile
 {
-    public UserMapper()
+    public CustomMapper()
     {
         CreateMap<User, UserResponse>();
         
+        CreateMap<User, UserResponseWithDepartments>();
+        
         CreateMap<RegisterRequest, User>();
+        
+        CreateMap<Department, DepartmentResponse>();
+        
+        CreateMap<Department, DepartmentResponseWithUsers>();
     }
 }

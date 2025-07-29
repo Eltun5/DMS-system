@@ -22,6 +22,8 @@ public class User
 
     public Role Role { get; set; }
     
+    public ICollection<Department> Departments { get; set; }
+    
     public string? AdditionalInfo { get; set; }
     
     public bool IsActive { get; set; }
@@ -32,7 +34,7 @@ public class User
     
     public DateTime CreatedAt { get; set; }
     
-    public DateTime nextTimeToChangePassword { get; set; }
+    public DateTime NextTimeToChangePassword { get; set; }
     
     public DateTime? LastPaidDate { get; set; }
     

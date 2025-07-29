@@ -9,8 +9,8 @@ public class Department
     public string? Description { get; set; }
 
     public Guid ManagerId { get; set; }
-
-    public Guid ParentId { get; set; }
+    
+    public ICollection<User> Employees { get; set; }
 
     public bool IsActive { get; set; }
 

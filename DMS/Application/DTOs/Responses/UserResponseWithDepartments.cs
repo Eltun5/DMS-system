@@ -3,7 +3,7 @@ using DepartmentManagementApp.Domain.Enums;
 
 namespace DepartmentManagementApp.Application.DTOs.Responses;
 
-public record UserResponse(
+public record UserResponseWithDepartments(
     string Id,
     string FullName,
     string Email,
@@ -13,6 +13,7 @@ public record UserResponse(
     Role Role,
     string Location,
     double Salary,
+    List<DepartmentResponse> Departments,
     string AdditionalInfo,
     bool IsActive,
     bool IsVerified,
