@@ -1,10 +1,4 @@
 using System.Text;
-using DepartmentManagementApp.Application.Interfaces;
-using DepartmentManagementApp.Application.Mappers;
-using DepartmentManagementApp.Application.Service;
-using DepartmentManagementApp.Domain.Models;
-using DepartmentManagementApp.Infrastructure.DBContext;
-using DepartmentManagementApp.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +6,15 @@ using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using Serilog;
 using StackExchange.Redis;
-using WebApplication1;
+using WebApplication1.Application.Interfaces;
+using WebApplication1.Application.Mappers;
+using WebApplication1.Application.Service;
+using WebApplication1.Domain.Models;
+using WebApplication1.Infrastructure.DBContext;
+using WebApplication1.Infrastructure.Interfaces;
 using WebApplication1.Infrastructure.Repositories;
-using Role = DepartmentManagementApp.Domain.Enums.Role;
+using WebApplication1.SignalR;
+using Role = WebApplication1.Domain.Enums.Role;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +26,7 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRedisTokenService, RedisTokenService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -45,6 +46,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
         };
+        
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
+                
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chat-hub"))
+                {
+                    context.Token = accessToken;
+                }
+                
+                return Task.CompletedTask;
+            }
+        };
+
     });
 
 builder.Services.AddHostedService<CustomBackgroundService>();

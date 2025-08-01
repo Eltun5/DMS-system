@@ -1,11 +1,11 @@
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Application.DTOs.Responses;
+using WebApplication1.Application.DTOs.Requests;
+using WebApplication1.Application.DTOs.Responses;
 
-namespace DepartmentManagementApp.Application.Interfaces;
+namespace WebApplication1.Application.Interfaces;
 
 public interface IDepartmentService
 {
-    Task<DepartmentResponseWithUsers> CreateDepartment(DepartmentRequest request);
+    Task<string> CreateDepartment(DepartmentRequest request);
 
     Task<DepartmentResponseWithUsers> GetDepartmentById(string id);
     
@@ -15,11 +15,13 @@ public interface IDepartmentService
     
     Task<IEnumerable<DepartmentResponseWithUsers>> GetActiveDepartments();
     
-    Task<DepartmentResponseWithUsers> UpdateDepartment(DepartmentRequest request);
+    Task<string> UpdateDepartment(string departmentId, DepartmentRequest request);
     
     Task<DepartmentResponseWithUsers> AddEmployeeInDepartment(string departmentId, string employeeId);
     
     Task<DepartmentResponseWithUsers> RemoveEmployeeFromDepartment(string departmentId, string employeeId);
     
-    Task DeleteDepartment(string id);
+    Task DeactivateDepartment(string id);
+    
+    Task ActivateDepartment(string id);
 }

@@ -1,7 +1,7 @@
-using DepartmentManagementApp.Application.Interfaces;
 using StackExchange.Redis;
+using WebApplication1.Application.Interfaces;
 
-namespace DepartmentManagementApp.Application.Service;
+namespace WebApplication1.Application.Service;
 
 public class RedisTokenService : IRedisTokenService
 {

@@ -1,4 +1,4 @@
-namespace DepartmentManagementApp.Application.DTOs.Responses;
+namespace WebApplication1.Application.DTOs.Responses;
 
 public record DepartmentResponseWithUsers(
         string Id,

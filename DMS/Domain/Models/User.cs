@@ -1,6 +1,6 @@
-using DepartmentManagementApp.Domain.Enums;
+using WebApplication1.Domain.Enums;
 
-namespace DepartmentManagementApp.Domain.Models;
+namespace WebApplication1.Domain.Models;
 
 public class User
 {

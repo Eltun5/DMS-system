@@ -1,7 +1,7 @@
-using DepartmentManagementApp.Domain.Enums;
-using DepartmentManagementApp.Domain.Models;
+using WebApplication1.Domain.Enums;
+using WebApplication1.Domain.Models;
 
-namespace DepartmentManagementApp.Infrastructure.Interfaces;
+namespace WebApplication1.Infrastructure.Interfaces;
 
 public interface IUserRepository
 {

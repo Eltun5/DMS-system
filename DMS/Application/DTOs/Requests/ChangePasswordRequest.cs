@@ -1,4 +1,4 @@
-namespace DepartmentManagementApp.Application.DTOs.Requests;
+namespace WebApplication1.Application.DTOs.Requests;
 
 public record ChangePasswordRequest(
     string userId,

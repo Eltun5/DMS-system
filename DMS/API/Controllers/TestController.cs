@@ -1,17 +1,19 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Domain.Models;
+using WebApplication1.Infrastructure.DBContext;
 
-namespace DepartmentManagementApp.API.Controllers;
+namespace WebApplication1.API.Controllers;
 
 [Route("api/v1/test")]
 [ApiController]
-public class TestController : ControllerBase
+public class TestController(AppDbContext db) : ControllerBase
 {
     [HttpGet]
     [Authorize]
-    public string Get()
+    public IEnumerable<Message> Get()
     {
-        return "Hello!";
+        return db.Messages.ToList();
     }
 
     [HttpGet("test")]

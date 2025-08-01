@@ -1,160 +1,260 @@
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Application.DTOs.Responses;
-using DepartmentManagementApp.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
+using WebApplication1.Application.DTOs.Requests;
+using WebApplication1.Application.DTOs.Responses;
+using WebApplication1.Application.Interfaces;
 
-namespace DepartmentManagementApp.API.Controllers;
+namespace WebApplication1.API.Controllers;
 
+/// <summary>
+/// API controller for managing users and their relationships with departments.
+/// </summary>
 [Route("api/v1/user")]
 [ApiController]
-public class UserController : ControllerBase
+public class UserController(IUserService userService) : ControllerBase
 {
-    private readonly IUserService _userService;
-    
-    public UserController(IUserService userService)
-    {
-        _userService = userService;
-    }
-    
+    /// <summary>
+    /// Creates a new user.
+    /// </summary>
+    /// <param name="request">The user registration details.</param>
+    /// <returns>The newly created user with department information.</returns>
     [HttpPost]
-    public async Task<ActionResult<UserResponseWithDepartments>> CreateUser([FromBody]RegisterRequest request)
+    public async Task<ActionResult<UserResponseWithDepartments>> CreateUser([FromBody] RegisterRequest request)
     {
-        return await _userService.CreateUser(request);
+        return await userService.CreateUser(request);
     }
 
-    [HttpGet("id/{id}")]
+    /// <summary>
+    /// Retrieves a user by their ID.
+    /// </summary>
+    /// <param name="id">The ID of the user.</param>
+    /// <returns>The user and their associated departments.</returns>
+    [HttpGet("id")]
     [Authorize]
-    public async Task<ActionResult<UserResponseWithDepartments>> GetUserById(string id)
+    public async Task<ActionResult<UserResponseWithDepartments>> GetUserById([FromQuery] string id)
     {
-        return await _userService.GetUserById(id);
-    }
-    
-    [HttpGet("email/{email}")]
-    [Authorize]
-    public async Task<ActionResult<UserResponseWithDepartments>> GetUserByEmail(string email)
-    {
-        return await _userService.GetUserByEmail(email);
+        return await userService.GetUserById(id);
     }
 
-    [HttpGet("username/{username}")]
+    /// <summary>
+    /// Retrieves a user by their email address.
+    /// </summary>
+    /// <param name="email">The email address of the user.</param>
+    /// <returns>The user and their associated departments.</returns>
+    [HttpGet("email")]
     [Authorize]
-    public async Task<ActionResult<UserResponseWithDepartments>> GetUserByUsername(string username)
+    public async Task<ActionResult<UserResponseWithDepartments>> GetUserByEmail([FromQuery] string email)
     {
-        return await _userService.GetUserByUserName(username);
+        return await userService.GetUserByEmail(email);
     }
 
-    [HttpGet("phone-number/{phoneNumber}")]
+    /// <summary>
+    /// Retrieves a user by their username.
+    /// </summary>
+    /// <param name="username">The username of the user.</param>
+    /// <returns>The user and their associated departments.</returns>
+    [HttpGet("username")]
     [Authorize]
-    public async Task<ActionResult<UserResponseWithDepartments>> GetUserByPhoneNumber(string phoneNumber)
+    public async Task<ActionResult<UserResponseWithDepartments>> GetUserByUsername([FromQuery] string username)
     {
-        return await _userService.GetUserByPhoneNumber(phoneNumber);
+        return await userService.GetUserByUserName(username);
     }
-    
+
+    /// <summary>
+    /// Retrieves a user by their phone number.
+    /// </summary>
+    /// <param name="phoneNumber">The phone number of the user.</param>
+    /// <returns>The user and their associated departments.</returns>
+    [HttpGet("phone-number")]
+    [Authorize]
+    public async Task<ActionResult<UserResponseWithDepartments>> GetUserByPhoneNumber([FromQuery] string phoneNumber)
+    {
+        return await userService.GetUserByPhoneNumber(phoneNumber);
+    }
+
+    /// <summary>
+    /// Retrieves all users.
+    /// </summary>
+    /// <returns>A list of users and their associated departments.</returns>
     [HttpGet]
     [Authorize]
     public async Task<ActionResult<IEnumerable<UserResponseWithDepartments>>> GetUsers()
     {
-        return Ok(await _userService.GetAllUsers());
+        return Ok(await userService.GetAllUsers());
     }
 
-    [HttpGet("role/{role}")]
+    /// <summary>
+    /// Retrieves users by their role.
+    /// </summary>
+    /// <param name="role">The role to filter users by.</param>
+    /// <returns>A list of users matching the specified role.</returns>
+    [HttpGet("role")]
     [Authorize]
-    public async Task<ActionResult<IEnumerable<UserResponseWithDepartments>>> GetUsersByRole(string role)
+    public async Task<ActionResult<IEnumerable<UserResponseWithDepartments>>> GetUsersByRole([FromQuery] string role)
     {
-        return Ok(await _userService.GetAllUsersByRole(role));
+        return Ok(await userService.GetAllUsersByRole(role));
     }
 
+    /// <summary>
+    /// Retrieves all active users.
+    /// </summary>
+    /// <returns>A list of active users.</returns>
     [HttpGet("active")]
     [Authorize]
     public async Task<ActionResult<IEnumerable<UserResponseWithDepartments>>> GetActiveUsers()
     {
-        return Ok(await _userService.GetActiveUsers());
+        return Ok(await userService.GetActiveUsers());
     }
-    
+
+    /// <summary>
+    /// Retrieves all deactivated users.
+    /// </summary>
+    /// <returns>A list of deactivated users.</returns>
     [HttpGet("deactivate")]
     [Authorize]
     public async Task<ActionResult<IEnumerable<UserResponseWithDepartments>>> GetDeactivateUsers()
     {
-        return Ok(await _userService.GetDeactivateUsers());
+        return Ok(await userService.GetDeactivateUsers());
     }
-    
+
+    /// <summary>
+    /// Retrieves all deleted users.
+    /// </summary>
+    /// <returns>A list of deleted users.</returns>
     [HttpGet("deleted")]
     [Authorize]
     public async Task<ActionResult<IEnumerable<UserResponseWithDepartments>>> GetDeletedUsers()
     {
-        return Ok(await _userService.GetDeletedUsers());
+        return Ok(await userService.GetDeletedUsers());
     }
-    
+
+    /// <summary>
+    /// Changes the password of a user.
+    /// </summary>
+    /// <param name="request">The password change request containing current and new passwords.</param>
+    /// <returns>A message indicating success or failure.</returns>
     [HttpPut("password")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<string>> ChangePassword(
-        [FromBody] ChangePasswordRequest request)
+    public async Task<ActionResult<string>> ChangePassword([FromBody] ChangePasswordRequest request)
     {
-        return await _userService.ChangePassword(request);
+        return await userService.ChangePassword(request);
     }
 
-    [HttpPut("add-department/{userId}/{departmentId}")]
+    /// <summary>
+    /// Adds a department to a user.
+    /// </summary>
+    /// <param name="userId">The ID of the user.</param>
+    /// <param name="departmentId">The ID of the department to add.</param>
+    /// <returns>The updated user with the new department.</returns>
+    [HttpPatch("add-department")]
     [Authorize(Roles = "Admin, Manager")]
-    public async Task<ActionResult<UserResponseWithDepartments>> AddDepartmentInUser(string userId, string departmentId)
+    public async Task<ActionResult<UserResponseWithDepartments>> AddDepartmentInUser(
+        [FromQuery] string userId, 
+        [FromQuery] string departmentId)
     {
-        return await _userService.AddDepartmentInUser(userId, departmentId);
+        return await userService.AddDepartmentInUser(userId, departmentId);
     }
-    
-    [HttpPut("remove-department/{userId}/{departmentId}")]
+
+    /// <summary>
+    /// Removes a department from a user.
+    /// </summary>
+    /// <param name="userId">The ID of the user.</param>
+    /// <param name="departmentId">The ID of the department to remove.</param>
+    /// <returns>The updated user without the specified department.</returns>
+    [HttpPatch("remove-department")]
     [Authorize(Roles = "Admin, Manager")]
-    public async Task<ActionResult<UserResponseWithDepartments>> RemoveDepartmentInUser(string userId, string departmentId)
+    public async Task<ActionResult<UserResponseWithDepartments>> RemoveDepartmentInUser(
+        [FromQuery] string userId, 
+        [FromQuery] string departmentId)
     {
-        return await _userService.RemoveDepartmentInUser(userId, departmentId);
+        return await userService.RemoveDepartmentInUser(userId, departmentId);
     }
 
-    [HttpPut("change-salary/{userId}/{salary}")]
+    /// <summary>
+    /// Changes a user's salary.
+    /// </summary>
+    /// <param name="userId">The ID of the user.</param>
+    /// <param name="salary">The new salary value.</param>
+    /// <returns>The updated user with the new salary.</returns>
+    [HttpPatch("change-salary")]
     [Authorize(Roles = "Admin, Manager")]
-    public async Task<ActionResult<UserResponseWithDepartments>> ChangeSalary(string userId, int salary)
+    public async Task<ActionResult<UserResponseWithDepartments>> ChangeSalary([FromQuery] string userId, [FromQuery] int salary)
     {
-        return await _userService.ChangeUserSalary(userId, salary);
+        return await userService.ChangeUserSalary(userId, salary);
     }
 
-    [HttpPut("change-role/{userId}/{role}")]
+    /// <summary>
+    /// Changes a user's role.
+    /// </summary>
+    /// <param name="userId">The ID of the user.</param>
+    /// <param name="role">The new role to assign.</param>
+    /// <returns>The updated user with the new role.</returns>
+    [HttpPatch("change-role")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<UserResponseWithDepartments>> ChangeRole(string userId, string role)
+    public async Task<ActionResult<UserResponseWithDepartments>> ChangeRole([FromQuery] string userId, [FromQuery] string role)
     {
-        return await _userService.ChangeUserRole(userId, role);
+        return await userService.ChangeUserRole(userId, role);
     }
 
-    [HttpPut("deactivate/{userId}")]
+    /// <summary>
+    /// Deactivates a user.
+    /// </summary>
+    /// <param name="userId">The ID of the user to deactivate.</param>
+    /// <returns>The updated user after deactivation.</returns>
+    [HttpPatch("deactivate")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<UserResponseWithDepartments>> DeactivateUser(string userId)
+    public async Task<ActionResult<UserResponseWithDepartments>> DeactivateUser([FromQuery] string userId)
     {
-        return await _userService.DeactivateUser(userId);
+        return await userService.DeactivateUser(userId);
     }
 
-    [HttpPut("activate/{userId}")]
+    /// <summary>
+    /// Activates a user.
+    /// </summary>
+    /// <param name="userId">The ID of the user to activate.</param>
+    /// <returns>The updated user after activation.</returns>
+    [HttpPatch("activate")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<UserResponseWithDepartments>> ActivateUser(string userId)
+    public async Task<ActionResult<UserResponseWithDepartments>> ActivateUser([FromQuery] string userId)
     {
-        return await _userService.ActivateUser(userId);
-    }
-    
-    [HttpPut("verify/{userId}/{code}")]
-    public async Task<ActionResult<UserResponseWithDepartments>> VerifyUser(string userId,  string code)
-    {
-        return await _userService.VerifyUser(userId,  code);
+        return await userService.ActivateUser(userId);
     }
 
-    [HttpPut("update/{userId}")]
+    /// <summary>
+    /// Verifies a user's identity using a code.
+    /// </summary>
+    /// <param name="userId">The ID of the user to verify.</param>
+    /// <param name="code">The verification code sent to the user.</param>
+    /// <returns>The verified user.</returns>
+    [HttpPatch("verify")]
+    public async Task<ActionResult<UserResponseWithDepartments>> VerifyUser([FromQuery] string userId, [FromQuery] string code)
+    {
+        return await userService.VerifyUser(userId, code);
+    }
+
+    /// <summary>
+    /// Updates user information.
+    /// </summary>
+    /// <param name="userId">The ID of the user to update.</param>
+    /// <param name="request">The updated user information.</param>
+    /// <returns>The updated user.</returns>
+    [HttpPut("update")]
     [Authorize]
-    public async Task<ActionResult<UserResponseWithDepartments>> UpdateUser(string userId,
+    public async Task<ActionResult<UserResponseWithDepartments>> UpdateUser(
+        [FromQuery] string userId,
         [FromBody] UpdateUserRequest request)
     {
-        return await _userService.UpdateUser(userId, request);
+        return await userService.UpdateUser(userId, request);
     }
 
-    [HttpPut("delete/{userId}")]
+    /// <summary>
+    /// Permanently deletes a user.
+    /// </summary>
+    /// <param name="userId">The ID of the user to delete.</param>
+    [HttpDelete("delete")]
     [Authorize(Roles = "Admin")]
-    public async Task DeleteUser(string userId)
+    public async Task DeleteUser([FromQuery] string userId)
     {
-        await _userService.DeleteUser(userId);
+        await userService.DeleteUser(userId);
     }
 }

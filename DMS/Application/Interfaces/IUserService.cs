@@ -1,7 +1,7 @@
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Application.DTOs.Responses;
+using WebApplication1.Application.DTOs.Requests;
+using WebApplication1.Application.DTOs.Responses;
 
-namespace DepartmentManagementApp.Application.Interfaces;
+namespace WebApplication1.Application.Interfaces;
 
 public interface IUserService
 {

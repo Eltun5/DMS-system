@@ -1,7 +1,7 @@
-using DepartmentManagementApp.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using WebApplication1.Domain.Models;
 
-namespace DepartmentManagementApp.Infrastructure.DBContext;
+namespace WebApplication1.Infrastructure.DBContext;
 
 public class AppDbContext : DbContext
 {

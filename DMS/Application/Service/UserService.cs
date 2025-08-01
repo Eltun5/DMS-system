@@ -1,13 +1,13 @@
 using AutoMapper;
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Application.DTOs.Responses;
-using DepartmentManagementApp.Application.Interfaces;
-using DepartmentManagementApp.Domain.Enums;
-using DepartmentManagementApp.Domain.Models;
-using DepartmentManagementApp.Infrastructure.Interfaces;
 using Serilog;
+using WebApplication1.Application.DTOs.Requests;
+using WebApplication1.Application.DTOs.Responses;
+using WebApplication1.Application.Interfaces;
+using WebApplication1.Domain.Enums;
+using WebApplication1.Domain.Models;
+using WebApplication1.Infrastructure.Interfaces;
 
-namespace DepartmentManagementApp.Application.Service;
+namespace WebApplication1.Application.Service;
 
 public class UserService : IUserService
 {

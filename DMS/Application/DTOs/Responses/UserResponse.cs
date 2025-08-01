@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using DepartmentManagementApp.Domain.Enums;
+using WebApplication1.Domain.Enums;
 
-namespace DepartmentManagementApp.Application.DTOs.Responses;
+namespace WebApplication1.Application.DTOs.Responses;
 
 public record UserResponse(
     string Id,

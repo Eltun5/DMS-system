@@ -1,44 +1,59 @@
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Application.DTOs.Responses;
-using DepartmentManagementApp.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Application.DTOs.Requests;
+using WebApplication1.Application.DTOs.Responses;
+using WebApplication1.Application.Interfaces;
 
-namespace DepartmentManagementApp.API.Controllers;
+namespace WebApplication1.API.Controllers;
 
+/// <summary>
+/// Controller for handling authentication-related operations such as register, login, logout, and token refresh.
+/// </summary>
 [ApiController]
 [Route("api/v1/auth")]
-public class AuthController : ControllerBase
+public class AuthController(IAuthService authService) : ControllerBase
 {
-    private readonly IAuthService _authService;
-
-    public AuthController(IAuthService authService)
-    {
-        _authService = authService;
-    }
-
+    /// <summary>
+    /// Registers a new user.
+    /// </summary>
+    /// <param name="request">The registration request containing user details.</param>
+    /// <returns>The registered user's information.</returns>
     [HttpPost("register")]
     public ActionResult<UserResponse> Register([FromBody] RegisterRequest request)
     {
-        return Ok(_authService.register(request));
+        return Ok(authService.register(request));
     }
 
+    /// <summary>
+    /// Authenticates a user and returns an access token and refresh token.
+    /// </summary>
+    /// <param name="request">The login request containing credentials.</param>
+    /// <returns>Login response with tokens and user details.</returns>
     [HttpPost("login")]
     public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request)
     {
-        var response = await _authService.login(request);
+        var response = await authService.login(request);
         return Ok(response);
     }
 
+    /// <summary>
+    /// Refreshes the access token using a valid refresh token.
+    /// </summary>
+    /// <param name="refreshToken">The refresh token to generate a new access token.</param>
+    /// <returns>A new access token and refresh token.</returns>
     [HttpPost("refresh")]
     public async Task<ActionResult<LoginResponse>> RefreshToken([FromBody] string refreshToken)
     {
-        var response = await _authService.refreshToken(refreshToken);
+        var response = await authService.refreshToken(refreshToken);
         return Ok(response);
     }
 
+    /// <summary>
+    /// Logs out the user by invalidating the refresh token.
+    /// </summary>
+    /// <param name="refreshToken">The refresh token to invalidate.</param>
     [HttpPost("logout")]
     public async Task Logout([FromBody] string refreshToken)
     {
-        await _authService.logout(refreshToken);
+        await authService.logout(refreshToken);
     }
 }

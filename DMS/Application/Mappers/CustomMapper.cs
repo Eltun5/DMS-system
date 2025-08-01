@@ -1,9 +1,9 @@
 using AutoMapper;
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Application.DTOs.Responses;
-using DepartmentManagementApp.Domain.Models;
+using WebApplication1.Application.DTOs.Requests;
+using WebApplication1.Application.DTOs.Responses;
+using WebApplication1.Domain.Models;
 
-namespace DepartmentManagementApp.Application.Mappers;
+namespace WebApplication1.Application.Mappers;
 
 public class CustomMapper: Profile
 {

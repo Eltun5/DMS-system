@@ -1,8 +1,8 @@
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Application.DTOs.Responses;
-using LoginRequest = DepartmentManagementApp.Application.DTOs.Requests.LoginRequest;
+using WebApplication1.Application.DTOs.Requests;
+using WebApplication1.Application.DTOs.Responses;
+using LoginRequest = WebApplication1.Application.DTOs.Requests.LoginRequest;
 
-namespace DepartmentManagementApp.Application.Interfaces;
+namespace WebApplication1.Application.Interfaces;
 
 public interface IAuthService
 {

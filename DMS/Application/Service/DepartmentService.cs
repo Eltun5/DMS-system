@@ -1,53 +1,125 @@
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Application.DTOs.Responses;
-using DepartmentManagementApp.Application.Interfaces;
+using AutoMapper;
+using Serilog;
+using WebApplication1.Application.DTOs.Requests;
+using WebApplication1.Application.DTOs.Responses;
+using WebApplication1.Application.Interfaces;
+using WebApplication1.Domain.Enums;
+using WebApplication1.Domain.Models;
+using WebApplication1.Infrastructure.Interfaces;
 
-namespace DepartmentManagementApp.Application.Service;
+namespace WebApplication1.Application.Service;
 
-public class DepartmentService  : IDepartmentService
+public class DepartmentService(
+    IConfiguration config,
+    IDepartmentRepository departmentRepository,
+    IUserRepository userRepository,
+    IMapper mapper)
+    : IDepartmentService
 {
-    public Task<DepartmentResponseWithUsers> CreateDepartment(DepartmentRequest request)
+
+    public async Task<string> CreateDepartment(DepartmentRequest request)
     {
-        throw new NotImplementedException();
+        Log.Information(config["log:department:service:create:try"]!);
+        if (!await VerifyCanExistDepartmentWithThisField(request))
+        {
+            return config["log:department:service:create:failed"]!;
+        }
+        
+        var department = InitializeDepartment(request);
+
+        await departmentRepository.CreateDepartment(department);
+        Log.Information(config["log:department:service:create:success"]!);
+        return config["log:department:service:create:success"]!;
     }
 
-    public Task<DepartmentResponseWithUsers> GetDepartmentById(string id)
+    public async Task<DepartmentResponseWithUsers> GetDepartmentById(string id)
     {
-        throw new NotImplementedException();
+        Log.Information(config["log:department:service:get-by-id"]!);
+        return mapper.Map<DepartmentResponseWithUsers>( await departmentRepository.GetDepartmentById(id));
     }
 
-    public Task<DepartmentResponseWithUsers> GetDepartmentByName(string name)
+    public async Task<DepartmentResponseWithUsers> GetDepartmentByName(string name)
     {
-        throw new NotImplementedException();
+        Log.Information(config["log:department:service:get-by-name"]!);
+        return mapper.Map<DepartmentResponseWithUsers>( await departmentRepository.GetDepartmentByName(name));
     }
 
-    public Task<IEnumerable<DepartmentResponseWithUsers>> GetAllDepartments()
+    public async Task<IEnumerable<DepartmentResponseWithUsers>> GetAllDepartments()
     {
-        throw new NotImplementedException();
+        Log.Information(config["log:department:service:all-departments"]!);
+        return mapper.Map<IEnumerable<DepartmentResponseWithUsers>>(await departmentRepository.GetAllDepartments());
     }
 
-    public Task<IEnumerable<DepartmentResponseWithUsers>> GetActiveDepartments()
+    public async Task<IEnumerable<DepartmentResponseWithUsers>> GetActiveDepartments()
     {
-        throw new NotImplementedException();
+        Log.Information(config["log:department:service:get-active-departments"]!);
+        return mapper.Map<IEnumerable<DepartmentResponseWithUsers>>( await departmentRepository.GetActiveDepartments());
     }
 
-    public Task<DepartmentResponseWithUsers> UpdateDepartment(DepartmentRequest request)
+    public async Task<string> UpdateDepartment(string departmentId, DepartmentRequest request)
     {
-        throw new NotImplementedException();
+        Log.Information(config["log:department:service:update:try"]!);
+        Department? oldDepartment = await departmentRepository.GetDepartmentById(departmentId);
+        if (!await VerifyCanExistDepartmentWithThisField(request) || oldDepartment == null)
+        {
+            Log.Information(config["log:department:service:update:failed"]!);
+            return config["log:department:service:update:failed"]!;
+        }
+        Department department = UpdateDepartment(request, oldDepartment);
+        await departmentRepository.UpdateDepartment(department);
+        Log.Information(config["log:department:service:update:success"]!);
+        return config["log:department:service:update:success"]!;
     }
 
-    public Task<DepartmentResponseWithUsers> AddEmployeeInDepartment(string departmentId, string employeeId)
+    public async Task<DepartmentResponseWithUsers> AddEmployeeInDepartment(string departmentId, string employeeId)
     {
-        throw new NotImplementedException();
+        Log.Information(config["log:department:service:add-employee"]!);
+        return mapper.Map<DepartmentResponseWithUsers>(await departmentRepository.AddEmployeeInDepartment(departmentId, employeeId));
     }
 
-    public Task<DepartmentResponseWithUsers> RemoveEmployeeFromDepartment(string departmentId, string employeeId)
+    public async Task<DepartmentResponseWithUsers> RemoveEmployeeFromDepartment(string departmentId, string employeeId)
     {
-        throw new NotImplementedException();
+        Log.Information(config["log:department:service:remove-employee"]!);
+        return mapper.Map<DepartmentResponseWithUsers>(await departmentRepository.RemoveEmployeeFromDepartment(departmentId, employeeId));
     }
 
-    public Task DeleteDepartment(string id)
+    public async Task DeactivateDepartment(string id)
     {
-        throw new NotImplementedException();
+        Log.Information(config["log:department:service:deactivate"]!);
+        await departmentRepository.DeactivateDepartment(id);
+    }
+
+    public async Task ActivateDepartment(string id)
+    {
+        Log.Information(config["log:department:service:activate"]!);
+        await departmentRepository.ActivateDepartment(id);
+    }
+
+    private Department InitializeDepartment(DepartmentRequest request)
+    {
+        return new Department()
+        {
+            DepartmentName = request.Name,
+            Description = request.Description,
+            ManagerId = new Guid(request.ManagerId)
+        };
+    }
+    
+    private Department UpdateDepartment(DepartmentRequest request, Department oldDepartment)
+    {
+        oldDepartment.DepartmentName = request.Name;
+        oldDepartment.Description = request.Description;
+        oldDepartment.ManagerId = new Guid(request.ManagerId);
+        return oldDepartment;
+    }
+
+    private async Task<bool> VerifyCanExistDepartmentWithThisField(DepartmentRequest request)
+    {
+        User? user = await userRepository.GetById(request.ManagerId);
+        if (user == null || user.Role == Role.Manager)
+        {
+            return false;
+        }
+        return true;
     }
 }

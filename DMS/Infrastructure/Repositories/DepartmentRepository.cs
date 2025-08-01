@@ -1,61 +1,143 @@
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Domain.Models;
-using DepartmentManagementApp.Infrastructure.DBContext;
-using DepartmentManagementApp.Infrastructure.Interfaces;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
+using WebApplication1.Domain.Models;
+using WebApplication1.Infrastructure.DBContext;
+using WebApplication1.Infrastructure.Interfaces;
 
-namespace DepartmentManagementApp.Infrastructure.Repositories;
+namespace WebApplication1.Infrastructure.Repositories;
 
-public class DepartmentRepository : IDepartmentRepository
+public class DepartmentRepository(AppDbContext context) : IDepartmentRepository
 {
-    private readonly AppDbContext _context;
-
-    public DepartmentRepository(AppDbContext context)
+    public async Task CreateDepartment(Department department)
     {
-        _context = context;
+        context.Departments.Add(department);
+        await context.SaveChangesAsync();
     }
 
-    public Task<Department> CreateDepartment(DepartmentRequest request)
+    public async Task<Department?> GetDepartmentById(string id) => 
+        await context.Departments
+            .Where(department => department.Id.ToString().Equals(id))
+            .Include(department => department.Employees)
+            .AsSplitQuery()
+            .Select(Selector())
+            .FirstOrDefaultAsync();
+
+    public async Task<Department?> GetDepartmentByName(string name) => 
+        await context.Departments
+            .Where(department => department.DepartmentName.Equals(name))
+            .Include(department => department.Employees)
+            .AsSplitQuery()
+            .Select(Selector())
+            .FirstOrDefaultAsync();
+
+    public async Task<IEnumerable<Department>> GetAllDepartments() =>
+        await context.Departments
+            .Include(department => department.Employees)
+            .AsSplitQuery() 
+            .Select(Selector())
+            .ToListAsync();
+
+    public async Task<IEnumerable<Department>> GetActiveDepartments() =>
+        await context.Departments
+            .Where(department => department.IsActive)
+            .Include(department => department.Employees)
+            .AsSplitQuery() 
+            .Select(Selector())
+            .ToListAsync();
+    public async Task UpdateDepartment(Department department)
     {
-        throw new NotImplementedException();
+        context.Departments.Update(department);
+        await context.SaveChangesAsync();
     }
 
-    public Task<Department> GetDepartmentById(string id)
+    public async Task<Department?> AddEmployeeInDepartment(string departmentId, string employeeId)
     {
-        throw new NotImplementedException();
+        Department? department = await GetById(departmentId);
+
+        User? user = await context.Users.FindAsync(new Guid(employeeId));
+        if (department == null || user == null)
+        {
+            Log.Information("Cannot found department or user.");
+            return null;
+        }
+
+        if (!department.Employees.Contains(user))
+        {
+            department.Employees.Add(user);
+            await context.SaveChangesAsync();
+        }
+        return await GetDepartmentById(departmentId);
     }
 
-    public Task<Department> GetDepartmentByName(string name)
+    public async Task<Department?> RemoveEmployeeFromDepartment(string departmentId, string employeeId)
     {
-        throw new NotImplementedException();
+        Department? department = await GetById(departmentId);
+
+        User? user = await context.Users.FindAsync(new Guid(employeeId));
+        if (department == null || user == null)
+        {
+            Log.Information("Cannot found department or user.");
+            return null;
+        }
+
+        if (department.Employees.Contains(user))
+        {
+            department.Employees.Remove(user);
+            await context.SaveChangesAsync();
+        }
+        return await GetDepartmentById(departmentId);
     }
 
-    public Task<IEnumerable<Department>> GetAllDepartments()
+    public async Task DeactivateDepartment(string id)
     {
-        throw new NotImplementedException();
+        var department = await GetById(id);
+        if (department != null) department.IsActive = false;
+        await context.SaveChangesAsync();
     }
 
-    public Task<IEnumerable<Department>> GetActiveDepartments()
+    public async Task ActivateDepartment(string id)
     {
-        throw new NotImplementedException();
+        var department = await GetById(id);
+        if (department != null) department.IsActive = true;
+        await context.SaveChangesAsync();
     }
 
-    public Task<Department> UpdateDepartment(DepartmentRequest request)
+    private async Task<Department?> GetById(string id) =>
+        await context.Departments
+            .Include(department => department.Employees)
+            .FirstOrDefaultAsync(department => department.Id.ToString().Equals(id));
+    
+    private static Expression<Func<Department, Department>> Selector()
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<Department> AddEmployeeInDepartment(string departmentId, string employeeId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Department> RemoveEmployeeFromDepartment(string departmentId, string employeeId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task DeleteDepartment(string id)
-    {
-        throw new NotImplementedException();
+        return department => new Department()
+        {
+            Id = department.Id,
+            DepartmentName = department.DepartmentName,
+            Description = department.Description,
+            ManagerId = department.ManagerId,
+            IsActive = department.IsActive,
+            CreatedAt = department.CreatedAt,
+            UpdatedAt = department.UpdatedAt,
+            Employees = department.Employees.Select(user => new User()
+            {
+                Id = user.Id,
+                FullName = user.FullName,
+                Email = user.Email,
+                Age = user.Age,
+                PhoneNumber = user.PhoneNumber,
+                Location = user.Location,
+                Salary = user.Salary,
+                Role = user.Role,
+                AdditionalInfo = user.AdditionalInfo,
+                IsActive = user.IsActive,
+                IsVerified = user.IsVerified,
+                IsDeleted = user.IsDeleted,
+                NextTimeToChangePassword = user.NextTimeToChangePassword,
+                LastPaidDate = user.LastPaidDate,
+                UpdatedAt = user.UpdatedAt,
+                DeleteAt = user.DeleteAt
+            }).ToList()
+        };
     }
 }

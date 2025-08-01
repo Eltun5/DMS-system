@@ -1,4 +1,4 @@
-namespace DepartmentManagementApp.Application.Interfaces;
+namespace WebApplication1.Application.Interfaces;
 
 public interface IRedisTokenService
 {

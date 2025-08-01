@@ -1,13 +1,13 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using DepartmentManagementApp.Application.DTOs.Responses;
-using DepartmentManagementApp.Application.Interfaces;
-using DepartmentManagementApp.Domain.Models;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using WebApplication1.Application.DTOs.Responses;
+using WebApplication1.Application.Interfaces;
+using WebApplication1.Domain.Models;
 
-namespace DepartmentManagementApp.Application.Service;
+namespace WebApplication1.Application.Service;
 
 public class JwtService : IJwtService
 {

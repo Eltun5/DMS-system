@@ -1,25 +1,26 @@
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Domain.Models;
+using WebApplication1.Domain.Models;
 
-namespace DepartmentManagementApp.Infrastructure.Interfaces;
+namespace WebApplication1.Infrastructure.Interfaces;
 
 public interface IDepartmentRepository
 {
-    Task<Department> CreateDepartment(DepartmentRequest request);
+    Task CreateDepartment(Department department);
 
-    Task<Department> GetDepartmentById(string id);
+    Task<Department?> GetDepartmentById(string id);
     
-    Task<Department> GetDepartmentByName(string name);
+    Task<Department?> GetDepartmentByName(string name);
     
     Task<IEnumerable<Department>> GetAllDepartments();
     
     Task<IEnumerable<Department>> GetActiveDepartments();
     
-    Task<Department> UpdateDepartment(DepartmentRequest request);
+    Task UpdateDepartment(Department department);
     
-    Task<Department> AddEmployeeInDepartment(string departmentId, string employeeId);
+    Task<Department?> AddEmployeeInDepartment(string departmentId, string employeeId);
     
-    Task<Department> RemoveEmployeeFromDepartment(string departmentId, string employeeId);
+    Task<Department?> RemoveEmployeeFromDepartment(string departmentId, string employeeId);
     
-    Task DeleteDepartment(string id);
+    Task DeactivateDepartment(string id);
+    
+    Task ActivateDepartment(string id);
 }

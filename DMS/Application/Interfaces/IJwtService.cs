@@ -1,7 +1,7 @@
-using DepartmentManagementApp.Application.DTOs.Responses;
-using DepartmentManagementApp.Domain.Models;
+using WebApplication1.Application.DTOs.Responses;
+using WebApplication1.Domain.Models;
 
-namespace DepartmentManagementApp.Application.Interfaces;
+namespace WebApplication1.Application.Interfaces;
     
 public interface IJwtService
 {
