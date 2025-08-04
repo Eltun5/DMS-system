@@ -1,0 +1,75 @@
+2025-08-03 20:01:44.648 +04:00 [INF] Database Initialized.
+2025-08-03 20:01:44.838 +04:00 [INF] CustomBackgroundService is working.
+2025-08-03 20:01:44.952 +04:00 [INF] No old user password histories found.
+2025-08-03 20:01:44.953 +04:00 [INF] Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: 
+2025-08-03 20:02:15.265 +04:00 [INF] Someone try to register. Email : aslanoveltun28@gmail.com
+2025-08-03 20:02:15.266 +04:00 [INF] Someone try to create a user.
+2025-08-03 20:02:16.090 +04:00 [INF] User created successfully.
+2025-08-03 20:02:19.623 +04:00 [INF] send mailaslanoveltun28@gmail.com
+2025-08-03 20:02:30.084 +04:00 [INF] aslanoveltun28@gmail.com
+2025-08-03 20:02:53.226 +04:00 [INF] Someone try to verify user.
+2025-08-03 20:02:58.958 +04:00 [INF] aslanoveltun28@gmail.com
+2025-08-03 20:02:59.180 +04:00 [INF] AccessToken generated. AccessToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjFiYTRhNDMzLWVlOTAtNDIxNi05YmFiLTA4ZDZmYmIwN2ViYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJFbHR1biBBc2xhbm92IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiRW1wbG95ZWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhc2xhbm92ZWx0dW4yOEBnbWFpbC5jb20iLCJleHAiOjE3NTQyNDA1NzksImlzcyI6IkRlcGFydG1lbnRNYW5hZ2VtZW50QXBpIiwiYXVkIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRDbGllbnQifQ.BzP5L0vsJj7oZ0eI33LOHMqSFXnXDUoDAY_3c5u5oE0WQm6p-fIvy1FBJ7BSoVgyVliFiB2lLxPCK5VY0ZSYaw
+2025-08-03 20:02:59.181 +04:00 [INF] RefreshToken generated. RefreshToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjFiYTRhNDMzLWVlOTAtNDIxNi05YmFiLTA4ZDZmYmIwN2ViYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFzbGFub3ZlbHR1bjI4QGdtYWlsLmNvbSIsImV4cCI6MTc1NDI0MDU3OSwiaXNzIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRBcGkiLCJhdWQiOiJEZXBhcnRtZW50TWFuYWdlbWVudENsaWVudCJ9.QvXsMI-AYKB4OjEBDzcdtvs9eEUXwTbDDhHdsbj1CfiRG5ImDeSnU8e2xf15BX0g0ygKg3195XhJLOHhyWxPyQ
+2025-08-03 20:03:04.487 +04:00 [INF] admin1234@gmail.com
+2025-08-03 20:03:04.685 +04:00 [INF] AccessToken generated. AccessToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjQyMjFiMmNiLWNiODYtNDVjNC1iNTljLTk0N2IyZTA1NTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJBZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiYWRtaW4xMjM0QGdtYWlsLmNvbSIsImV4cCI6MTc1NDI0MDU4NCwiaXNzIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRBcGkiLCJhdWQiOiJEZXBhcnRtZW50TWFuYWdlbWVudENsaWVudCJ9.umroTvekLVrSj1JdFFwinqKxmktCIHM_JYBUbftg2vGpQNlJwrr0lZ_mh4exyHnZrGItK8uvcvLHR_HSnyXDEA
+2025-08-03 20:03:04.686 +04:00 [INF] RefreshToken generated. RefreshToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjQyMjFiMmNiLWNiODYtNDVjNC1iNTljLTk0N2IyZTA1NTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFkbWluMTIzNEBnbWFpbC5jb20iLCJleHAiOjE3NTQyNDA1ODQsImlzcyI6IkRlcGFydG1lbnRNYW5hZ2VtZW50QXBpIiwiYXVkIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRDbGllbnQifQ.wteJG4CTD-vWELqWkc8OSki6anoiWvga4DhR-2_OE5ldJpB18baDsriBbFjltwBX25WwPRlfBtXh3ZVjGbQAvw
+2025-08-03 20:03:08.477 +04:00 [INF] break point on token
+2025-08-03 20:03:08.550 +04:00 [INF] break point on token validated
+2025-08-03 20:03:08.551 +04:00 [INF] Get user id from token. User ID : 4221b2cb-cb86-45c4-b59c-947b2e055105
+2025-08-03 20:03:08.551 +04:00 [INF] Some user try to logout. UserId : 4221b2cb-cb86-45c4-b59c-947b2e055105
+2025-08-03 20:03:16.589 +04:00 [INF] aslanoveltun28@gmail.com
+2025-08-03 20:03:16.776 +04:00 [INF] AccessToken generated. AccessToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjFiYTRhNDMzLWVlOTAtNDIxNi05YmFiLTA4ZDZmYmIwN2ViYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJFbHR1biBBc2xhbm92IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiRW1wbG95ZWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhc2xhbm92ZWx0dW4yOEBnbWFpbC5jb20iLCJleHAiOjE3NTQyNDA1OTYsImlzcyI6IkRlcGFydG1lbnRNYW5hZ2VtZW50QXBpIiwiYXVkIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRDbGllbnQifQ.kGQxx-dnM1t6VAOxUreX1QeNhjaTlHO91yCyorVYn55VxTVQsVEtNeNCSP2Zav6dROUkbVOz2r6Y95OAW2TA_g
+2025-08-03 20:03:16.777 +04:00 [INF] RefreshToken generated. RefreshToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjFiYTRhNDMzLWVlOTAtNDIxNi05YmFiLTA4ZDZmYmIwN2ViYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFzbGFub3ZlbHR1bjI4QGdtYWlsLmNvbSIsImV4cCI6MTc1NDI0MDU5NiwiaXNzIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRBcGkiLCJhdWQiOiJEZXBhcnRtZW50TWFuYWdlbWVudENsaWVudCJ9.bF6faE0crvDXwWQflIQnTqZDo5BjihONnqK-s6ME2Aprsf2tx2tji4e0eqm-WQ6pYPSsjJgNAHXhL0aT05Ioiw
+2025-08-03 20:03:19.519 +04:00 [INF] break point on token
+2025-08-03 20:03:19.519 +04:00 [INF] break point on token validated
+2025-08-03 20:03:19.519 +04:00 [INF] Get user id from token. User ID : 1ba4a433-ee90-4216-9bab-08d6fbb07eba
+2025-08-03 20:03:19.571 +04:00 [INF] AccessToken generated. AccessToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjFiYTRhNDMzLWVlOTAtNDIxNi05YmFiLTA4ZDZmYmIwN2ViYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJFbHR1biBBc2xhbm92IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiRW1wbG95ZWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhc2xhbm92ZWx0dW4yOEBnbWFpbC5jb20iLCJleHAiOjE3NTQyNDA1OTksImlzcyI6IkRlcGFydG1lbnRNYW5hZ2VtZW50QXBpIiwiYXVkIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRDbGllbnQifQ.UnaVjIdLFGVX4YVlnUBMpkJ4TnBsYlJqtazvw6T7wPohUs_Ofk2D1YydfsZiHOWUGoVRdO29OswK2jIIGfF9gA
+2025-08-03 20:03:19.572 +04:00 [INF] RefreshToken generated. RefreshToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjFiYTRhNDMzLWVlOTAtNDIxNi05YmFiLTA4ZDZmYmIwN2ViYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFzbGFub3ZlbHR1bjI4QGdtYWlsLmNvbSIsImV4cCI6MTc1NDI0MDU5OSwiaXNzIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRBcGkiLCJhdWQiOiJEZXBhcnRtZW50TWFuYWdlbWVudENsaWVudCJ9.cTk911hRJl_v6-iVrbm7q6Aolz-svWUY8CMf89-olnn5j0VLveUC6ag4Eve1C5k8VBQ_WvFVpyEuhmlNBBVXOg
+2025-08-03 20:06:09.502 +04:00 [INF] admin1234@gmail.com
+2025-08-03 20:06:09.706 +04:00 [INF] AccessToken generated. AccessToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjQyMjFiMmNiLWNiODYtNDVjNC1iNTljLTk0N2IyZTA1NTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJBZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiYWRtaW4xMjM0QGdtYWlsLmNvbSIsImV4cCI6MTc1NDI0MDc2OSwiaXNzIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRBcGkiLCJhdWQiOiJEZXBhcnRtZW50TWFuYWdlbWVudENsaWVudCJ9.U4R8E5YHw7vkN6sRP_J0VIaQEK9BEJdq8IZ4OGz4_x60CK3U1f-QMQ4_NVlOBHK_l6XhPdymzpGA6vFQPKZzyQ
+2025-08-03 20:06:09.706 +04:00 [INF] RefreshToken generated. RefreshToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjQyMjFiMmNiLWNiODYtNDVjNC1iNTljLTk0N2IyZTA1NTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFkbWluMTIzNEBnbWFpbC5jb20iLCJleHAiOjE3NTQyNDA3NjksImlzcyI6IkRlcGFydG1lbnRNYW5hZ2VtZW50QXBpIiwiYXVkIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRDbGllbnQifQ.RMWOzgrcY3rIp9EOznIo2Xxrv0W_Lxv3OrBNXF7AiIp5XQhe2xdoew6zA-XQqVDQBMaTa0S1nLIaxtPD7gLzag
+2025-08-03 20:08:54.313 +04:00 [INF] Someone try to create a user.
+2025-08-03 20:08:54.512 +04:00 [INF] User created successfully.
+2025-08-03 20:09:07.191 +04:00 [INF] Someone try to get all users.
+2025-08-03 20:10:07.566 +04:00 [INF] Someone try to get a user by id. Id : 511c909c-4481-4abf-8ca5-7f9bf4276724
+2025-08-03 20:10:46.097 +04:00 [INF] Someone try to get a user by email. Email : aslanoveltun28@gmail.com
+2025-08-03 20:11:38.035 +04:00 [INF] Someone try to get a user by full name. Full name : Admin
+2025-08-03 20:12:16.503 +04:00 [INF] Someone try to get a user by phone number. Phone number :  994 70 721 97 89
+2025-08-03 20:13:34.530 +04:00 [INF] Someone try to get a user by phone number. Phone number :  994 70 721 97 89
+2025-08-03 20:13:55.816 +04:00 [INF] Someone try to get a user by phone number. Phone number :  994 70 721 97 89
+2025-08-03 20:15:00.691 +04:00 [INF] Someone try to get a user by phone number. Phone number : " 994 70 721 97 89"
+2025-08-03 20:15:08.824 +04:00 [INF] Someone try to get a user by phone number. Phone number : 994 70 721 97 89
+2025-08-03 20:15:22.264 +04:00 [INF] Someone try to get a user by phone number. Phone number :  994 70 721 97 89
+2025-08-03 20:18:14.366 +04:00 [INF] Someone try to get a user by phone number. Phone number : +994 70 721 97 89
+2025-08-03 20:18:45.810 +04:00 [INF] Someone try to get all users.
+2025-08-03 20:18:53.736 +04:00 [INF] Someone try to get all users.
+2025-08-03 20:19:16.706 +04:00 [INF] Someone try to get active users list.
+2025-08-03 20:20:03.380 +04:00 [INF] Someone try to get deleted users list.
+2025-08-03 20:20:39.051 +04:00 [INF] Someone try to change password.
+2025-08-03 20:20:48.088 +04:00 [INF] aslanoveltun28@gmail.com
+2025-08-03 20:20:48.289 +04:00 [INF] Password is wrong.
+2025-08-03 20:20:54.054 +04:00 [INF] aslanoveltun28@gmail.com
+2025-08-03 20:20:54.250 +04:00 [INF] AccessToken generated. AccessToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjFiYTRhNDMzLWVlOTAtNDIxNi05YmFiLTA4ZDZmYmIwN2ViYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJFbHR1biBBc2xhbm92IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiRW1wbG95ZWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhc2xhbm92ZWx0dW4yOEBnbWFpbC5jb20iLCJleHAiOjE3NTQyNDE2NTQsImlzcyI6IkRlcGFydG1lbnRNYW5hZ2VtZW50QXBpIiwiYXVkIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRDbGllbnQifQ.Ci7_wKjqsMxHQquPYth-FodYmr22-tHHILDcaQ-iQE09D7876SSoGsKe58_rWQIwn212NLSAlSSe5jsicbbTCQ
+2025-08-03 20:20:54.250 +04:00 [INF] RefreshToken generated. RefreshToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjFiYTRhNDMzLWVlOTAtNDIxNi05YmFiLTA4ZDZmYmIwN2ViYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFzbGFub3ZlbHR1bjI4QGdtYWlsLmNvbSIsImV4cCI6MTc1NDI0MTY1NCwiaXNzIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRBcGkiLCJhdWQiOiJEZXBhcnRtZW50TWFuYWdlbWVudENsaWVudCJ9.EFdkuLgZs6Ykpnk0h4Ku3YzJoRCdegxnDYu3MfhfTvfqbqlP98typ49xjPHg64fC3APMzbft2suebFDb4Q-ugw
+2025-08-03 20:54:48.904 +04:00 [INF] Database Initialized.
+2025-08-03 20:54:49.153 +04:00 [INF] CustomBackgroundService is working.
+2025-08-03 20:54:49.279 +04:00 [INF] No old user password histories found.
+2025-08-03 20:54:49.279 +04:00 [INF] Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: 
+2025-08-03 20:56:57.935 +04:00 [INF] admin1234@gmail.com
+2025-08-03 20:56:58.472 +04:00 [INF] AccessToken generated. AccessToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjQyMjFiMmNiLWNiODYtNDVjNC1iNTljLTk0N2IyZTA1NTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJBZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiYWRtaW4xMjM0QGdtYWlsLmNvbSIsImV4cCI6MTc1NDI0MzgxOCwiaXNzIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRBcGkiLCJhdWQiOiJEZXBhcnRtZW50TWFuYWdlbWVudENsaWVudCJ9.XFBQYZ_7TAMUepX8hTyf9rOCtvreQub5dqWqyQVKgyzpCHR2ou5uOzNc3HymuPPwWLhhpix00cncEDEfN68KCA
+2025-08-03 20:56:58.474 +04:00 [INF] RefreshToken generated. RefreshToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjQyMjFiMmNiLWNiODYtNDVjNC1iNTljLTk0N2IyZTA1NTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFkbWluMTIzNEBnbWFpbC5jb20iLCJleHAiOjE3NTQyNDM4MTgsImlzcyI6IkRlcGFydG1lbnRNYW5hZ2VtZW50QXBpIiwiYXVkIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRDbGllbnQifQ.o5iKZar9Sm74PgdIkSj5vNMeRL8Yb6grLRcuQ3yJQi1E4unuyXyQj5J9uzQmcQiH63ivuq-sbPSZ-TnszYIZTg
+2025-08-03 20:57:59.899 +04:00 [INF] Someone try to change role.
+2025-08-03 21:01:09.616 +04:00 [INF] Database Initialized.
+2025-08-03 21:01:09.719 +04:00 [INF] CustomBackgroundService is working.
+2025-08-03 21:01:09.822 +04:00 [INF] No old user password histories found.
+2025-08-03 21:01:09.822 +04:00 [INF] Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: 
+2025-08-03 21:02:28.685 +04:00 [INF] Someone try to get all users.
+2025-08-03 21:12:31.118 +04:00 [INF] Database Initialized.
+2025-08-03 21:12:31.214 +04:00 [INF] CustomBackgroundService is working.
+2025-08-03 21:12:31.304 +04:00 [INF] No old user password histories found.
+2025-08-03 21:12:31.305 +04:00 [INF] Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: 
+2025-08-03 21:22:06.391 +04:00 [INF] Database Initialized.
+2025-08-03 21:22:06.503 +04:00 [INF] CustomBackgroundService is working.
+2025-08-03 21:22:06.602 +04:00 [INF] No old user password histories found.
+2025-08-03 21:22:06.603 +04:00 [INF] Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: 

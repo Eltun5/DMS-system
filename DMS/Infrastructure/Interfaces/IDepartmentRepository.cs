@@ -23,4 +23,6 @@ public interface IDepartmentRepository
     Task DeactivateDepartment(string id);
     
     Task ActivateDepartment(string id);
+    
+    bool ExistsByName(string name);
 }

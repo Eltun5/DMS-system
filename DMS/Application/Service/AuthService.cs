@@ -13,11 +13,12 @@ public class AuthService(
     IJwtService jwtService,
     IUserService userService,
     IConfiguration config,
-    IRedisTokenService redisTokenService,
-    AppDbContext dbContext)
+    IRedisService redisService,
+    AppDbContext dbContext,
+    IEmailService emailService)
     : IAuthService
 {
-    public async Task<LoginResponse> login(LoginRequest request)
+    public async Task<LoginResponse> Login(LoginRequest request)
     {
         Log.Information(config["log:auth:service:login"] + request.Email);
 
@@ -41,6 +42,12 @@ public class AuthService(
             throw new ArgumentException(config["log:auth:service:login:wrong-password"]!);
         }
 
+        if (user.IsDeleted || !user.IsActive || !user.IsVerified)
+        {
+            Log.Information(config["log:auth:service:login:invalid-user-status"]!);
+            throw new ArgumentException(config["log:auth:service:login:invalid-user-status"]!);
+        }
+
         var loginResponse = jwtService.GenerateToken(user);
 
         await StoreRefreshTokenAsync(user.Id.ToString(), loginResponse.RefreshToken);
@@ -54,7 +61,7 @@ public class AuthService(
         return loginResponse;
     }
 
-    public async Task<LoginResponse> refreshToken(string refreshToken)
+    public async Task<LoginResponse> RefreshToken(string refreshToken)
     {
         string? userId = jwtService.GetUserIdFromToken(refreshToken);
 
@@ -75,13 +82,26 @@ public class AuthService(
         throw new BadHttpRequestException("User not found!!!");
     }
 
-    public async Task<UserResponseWithDepartments> register(RegisterRequest request)
+    public async Task<UserResponseWithDepartments> Register(RegisterRequest request)
     {
         Log.Information(config["log:auth:service:register"] + request.Email);
-        return await userService.CreateUser(request);
+        string random = Guid.NewGuid().ToString();
+        var userResponseWithDepartments = await userService.CreateUser(request);
+        
+        await redisService.SetContentAsync(userResponseWithDepartments.Id,
+            "verification", random, TimeSpan.FromDays(1));
+        
+        await emailService.SendEmailAsync(request.Email, "Verification DMS", 
+            "https://localhost:7035/api/v1/user/verify?userId="+
+            userResponseWithDepartments.Id+
+            "&code="+random);
+        
+        Log.Information("send mail" + request.Email);
+        
+        return userResponseWithDepartments;
     }
 
-    public async Task logout(string refreshToken)
+    public async Task Logout(string refreshToken)
     {
         string? userId = jwtService.GetUserIdFromToken(refreshToken);
         if (userId != null)
@@ -95,17 +115,17 @@ public class AuthService(
     {
         var expiresIn = TimeSpan.FromDays(7);
 
-        await redisTokenService.SetRefreshTokenAsync(userId, token, expiresIn);
+        await redisService.SetContentAsync(userId, "refresh_token",token, expiresIn);
     }
 
     private async Task<bool> ValidateRefreshTokenAsync(string userId, string providedToken)
     {
-        var storedToken = await redisTokenService.GetRefreshTokenAsync(userId);
+        var storedToken = await redisService.GetContentAsync(userId, "refresh_token");
         return storedToken == providedToken;
     }
 
     private async Task DeleteRefreshTokenAsync(string userId)
     {
-        await redisTokenService.DeleteRefreshTokenAsync(userId);
+        await redisService.DeleteContentAsync(userId, "refresh_token");
     }
 }

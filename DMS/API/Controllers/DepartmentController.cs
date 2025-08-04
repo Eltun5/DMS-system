@@ -44,7 +44,7 @@ public class DepartmentController(IDepartmentService departmentService)
     /// <returns>The department with its associated users.</returns>
     [HttpGet("name")]
     [Authorize]
-    public async Task<ActionResult<DepartmentResponseWithUsers>> GetDepartmentByName([FromBody] string departmentName)
+    public async Task<ActionResult<DepartmentResponseWithUsers>> GetDepartmentByName([FromQuery] string departmentName)
     {
         return await departmentService.GetDepartmentByName(departmentName);
     }
@@ -57,8 +57,7 @@ public class DepartmentController(IDepartmentService departmentService)
     [Authorize]
     public async Task<ActionResult<IEnumerable<DepartmentResponseWithUsers>>> GetDepartments()
     {
-        var response = await departmentService.GetAllDepartments();
-        return new OkObjectResult(response);
+        return new OkObjectResult(await departmentService.GetAllDepartments());
     }
 
     /// <summary>
@@ -94,6 +93,7 @@ public class DepartmentController(IDepartmentService departmentService)
     /// <param name="employeeId">The ID of the employee to add.</param>
     /// <returns>The updated department with the new employee added.</returns>
     [HttpPatch("add")]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<ActionResult<DepartmentResponseWithUsers>> AddEmployeeInDepartment(
         [FromQuery] string departmentId,
         [FromQuery] string employeeId)
@@ -108,10 +108,35 @@ public class DepartmentController(IDepartmentService departmentService)
     /// <param name="employeeId">The ID of the employee to remove.</param>
     /// <returns>The updated department with the employee removed.</returns>
     [HttpPatch("remove")]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<ActionResult<DepartmentResponseWithUsers>> RemoveEmployeeInDepartment(
         [FromQuery] string departmentId,
         [FromQuery] string employeeId)
     {
         return await departmentService.RemoveEmployeeFromDepartment(departmentId, employeeId);
+    }
+
+    /// <summary>
+    /// Deactivates an existing department by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the department to be deactivated.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    [HttpPost("deactivate")]
+    [Authorize(Roles = "Admin, Manager")]
+    public async Task DeactivateDepartment([FromQuery]string id)
+    {
+        await departmentService.DeactivateDepartment(id);
+    }
+
+    /// <summary>
+    /// Activates a department by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the department to be activated.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    [HttpPost("activate")]
+    [Authorize(Roles = "Admin, Manager")]
+    public async Task ActivateDepartment([FromQuery]string id)
+    {
+        await departmentService.ActivateDepartment(id);
     }
 }

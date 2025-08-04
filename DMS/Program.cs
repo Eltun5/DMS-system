@@ -24,9 +24,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IRedisTokenService, RedisTokenService>();
+builder.Services.AddScoped<IRedisService, RedisService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -119,7 +120,7 @@ using (var scope = app.Services.CreateScope())
                 CreatedAt = DateTime.Now,
                 IsActive = true,
                 IsDeleted = false,
-                IsVerified = false,
+                IsVerified = true,
                 NextTimeToChangePassword = DateTime.Now.AddDays(30)
             });
             context.SaveChanges();

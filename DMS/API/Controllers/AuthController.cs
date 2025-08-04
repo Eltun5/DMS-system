@@ -18,9 +18,9 @@ public class AuthController(IAuthService authService) : ControllerBase
     /// <param name="request">The registration request containing user details.</param>
     /// <returns>The registered user's information.</returns>
     [HttpPost("register")]
-    public ActionResult<UserResponse> Register([FromBody] RegisterRequest request)
+    public async Task<ActionResult<UserResponse>> Register([FromBody] RegisterRequest request)
     {
-        return Ok(authService.register(request));
+        return Ok(await authService.Register(request));
     }
 
     /// <summary>
@@ -31,7 +31,7 @@ public class AuthController(IAuthService authService) : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request)
     {
-        var response = await authService.login(request);
+        var response = await authService.Login(request);
         return Ok(response);
     }
 
@@ -43,7 +43,7 @@ public class AuthController(IAuthService authService) : ControllerBase
     [HttpPost("refresh")]
     public async Task<ActionResult<LoginResponse>> RefreshToken([FromBody] string refreshToken)
     {
-        var response = await authService.refreshToken(refreshToken);
+        var response = await authService.RefreshToken(refreshToken);
         return Ok(response);
     }
 
@@ -54,6 +54,6 @@ public class AuthController(IAuthService authService) : ControllerBase
     [HttpPost("logout")]
     public async Task Logout([FromBody] string refreshToken)
     {
-        await authService.logout(refreshToken);
+        await authService.Logout(refreshToken);
     }
 }

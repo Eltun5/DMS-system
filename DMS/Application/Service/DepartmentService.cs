@@ -18,14 +18,15 @@ public class DepartmentService(
 {
 
     public async Task<string> CreateDepartment(DepartmentRequest request)
-    {
+    { 
         Log.Information(config["log:department:service:create:try"]!);
+        
         if (!await VerifyCanExistDepartmentWithThisField(request))
         {
             return config["log:department:service:create:failed"]!;
         }
-        
-        var department = InitializeDepartment(request);
+
+        var department = await InitializeDepartment(request);
 
         await departmentRepository.CreateDepartment(department);
         Log.Information(config["log:department:service:create:success"]!);
@@ -47,13 +48,14 @@ public class DepartmentService(
     public async Task<IEnumerable<DepartmentResponseWithUsers>> GetAllDepartments()
     {
         Log.Information(config["log:department:service:all-departments"]!);
-        return mapper.Map<IEnumerable<DepartmentResponseWithUsers>>(await departmentRepository.GetAllDepartments());
+        IEnumerable<Department> allDepartments = await departmentRepository.GetAllDepartments();
+        return mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentResponseWithUsers>>(allDepartments);
     }
 
     public async Task<IEnumerable<DepartmentResponseWithUsers>> GetActiveDepartments()
     {
         Log.Information(config["log:department:service:get-active-departments"]!);
-        return mapper.Map<IEnumerable<DepartmentResponseWithUsers>>( await departmentRepository.GetActiveDepartments());
+        return mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentResponseWithUsers>>( await departmentRepository.GetActiveDepartments());
     }
 
     public async Task<string> UpdateDepartment(string departmentId, DepartmentRequest request)
@@ -65,7 +67,7 @@ public class DepartmentService(
             Log.Information(config["log:department:service:update:failed"]!);
             return config["log:department:service:update:failed"]!;
         }
-        Department department = UpdateDepartment(request, oldDepartment);
+        Department department = await UpdateDepartment(request, oldDepartment);
         await departmentRepository.UpdateDepartment(department);
         Log.Information(config["log:department:service:update:success"]!);
         return config["log:department:service:update:success"]!;
@@ -95,17 +97,18 @@ public class DepartmentService(
         await departmentRepository.ActivateDepartment(id);
     }
 
-    private Department InitializeDepartment(DepartmentRequest request)
+    private Task<Department> InitializeDepartment(DepartmentRequest request)
     {
-        return new Department()
+        return Task.FromResult(new Department()
         {
             DepartmentName = request.Name,
             Description = request.Description,
+            IsActive = true,
             ManagerId = new Guid(request.ManagerId)
-        };
+        });
     }
     
-    private Department UpdateDepartment(DepartmentRequest request, Department oldDepartment)
+    private async Task<Department> UpdateDepartment(DepartmentRequest request, Department oldDepartment)
     {
         oldDepartment.DepartmentName = request.Name;
         oldDepartment.Description = request.Description;
@@ -116,7 +119,12 @@ public class DepartmentService(
     private async Task<bool> VerifyCanExistDepartmentWithThisField(DepartmentRequest request)
     {
         User? user = await userRepository.GetById(request.ManagerId);
-        if (user == null || user.Role == Role.Manager)
+        if (user == null || user.Role != Role.Manager)
+        {
+            return false;
+        }
+
+        if (departmentRepository.ExistsByName(request.Name))
         {
             return false;
         }

@@ -5,7 +5,6 @@ public record DepartmentResponseWithUsers(
         string DepartmentName,
         string Description,
         string ManagerId,
-        string ParentId,
         List<UserResponse> Users,
         bool IsActive,
         DateTime CreatedAt,

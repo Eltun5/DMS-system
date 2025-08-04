@@ -108,6 +108,9 @@ public class DepartmentRepository(AppDbContext context) : IDepartmentRepository
             .Include(department => department.Employees)
             .FirstOrDefaultAsync(department => department.Id.ToString().Equals(id));
     
+    public bool ExistsByName(string name) =>
+        context.Departments.Any(department => department.DepartmentName.ToLower()==name);
+    
     private static Expression<Func<Department, Department>> Selector()
     {
         return department => new Department()

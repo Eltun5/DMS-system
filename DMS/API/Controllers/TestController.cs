@@ -28,16 +28,16 @@ public class TestController(AppDbContext db) : ControllerBase
         return "Hello Poost";
     }
 
-    [HttpPut("{id}")]
-    public string Update(int id)
+    [HttpPut]
+    public string Update([FromQuery]int id)
     {
         return "Hello Update id : " + id;
     }
     
-    [HttpDelete("{id}")]
+    [HttpDelete]
     [Authorize(Roles = "Admin")]
-    public string Delete(int id)
+    public string Delete([FromQuery]int id)
     {
-        return "Hello Delete id : " + id;
+        return "Hello Admin Delete id : " + id;
     }
 }

@@ -5,7 +5,6 @@ public record DepartmentResponse (
     string DepartmentName,
     string Description,
     string ManagerId,
-    string ParentId,
     bool IsActive,
     DateTime CreatedAt,
     DateTime UpdatedAt

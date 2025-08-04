@@ -19,6 +19,7 @@ public class UserController(IUserService userService) : ControllerBase
     /// <param name="request">The user registration details.</param>
     /// <returns>The newly created user with department information.</returns>
     [HttpPost]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<ActionResult<UserResponseWithDepartments>> CreateUser([FromBody] RegisterRequest request)
     {
         return await userService.CreateUser(request);
@@ -226,10 +227,11 @@ public class UserController(IUserService userService) : ControllerBase
     /// <param name="userId">The ID of the user to verify.</param>
     /// <param name="code">The verification code sent to the user.</param>
     /// <returns>The verified user.</returns>
-    [HttpPatch("verify")]
+    [HttpGet("verify")]
     public async Task<ActionResult<UserResponseWithDepartments>> VerifyUser([FromQuery] string userId, [FromQuery] string code)
     {
-        return await userService.VerifyUser(userId, code);
+        var user = await userService.VerifyUser(userId, code);
+        return user==null ? NotFound() : user ;
     }
 
     /// <summary>

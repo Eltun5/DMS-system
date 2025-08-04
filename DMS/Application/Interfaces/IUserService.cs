@@ -39,7 +39,7 @@ public interface IUserService
     
     Task<UserResponseWithDepartments> ActivateUser(string userId);
     
-    Task<UserResponseWithDepartments> VerifyUser(string userId, string code);
+    Task<UserResponseWithDepartments?> VerifyUser(string userId, string code);
     
     Task<UserResponseWithDepartments> UpdateUser(string userId, UpdateUserRequest request);
 

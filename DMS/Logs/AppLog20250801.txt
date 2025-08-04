@@ -148,3 +148,7 @@
 2025-08-01 10:37:02.858 +04:00 [INF] Receiver is online. Message sent via SignalR.
 2025-08-01 10:38:03.487 +04:00 [INF] Someone try to get all users.
 2025-08-01 10:38:14.228 +04:00 [INF] User 6e785c7a-39eb-4eed-be4a-b0ec8fe4d72e disconnected
+2025-08-01 17:00:54.632 +04:00 [INF] Database Initialized.
+2025-08-01 17:00:54.740 +04:00 [INF] CustomBackgroundService is working.
+2025-08-01 17:00:54.825 +04:00 [INF] No old user password histories found.
+2025-08-01 17:00:54.826 +04:00 [INF] Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: 

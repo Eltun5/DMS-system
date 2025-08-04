@@ -1,16 +1,15 @@
-using System.Collections.Concurrent;
 using System.Security.Claims;
 using Microsoft.AspNetCore.SignalR;
 using Serilog;
+using WebApplication1.Application.Interfaces;
 using WebApplication1.Domain.Models;
 using WebApplication1.Infrastructure.DBContext;
 
 namespace WebApplication1.SignalR;
 
-public class ChatHub(AppDbContext db) : Hub
+public class ChatHub(AppDbContext db,
+    IRedisService redisService) : Hub
 {
-    private static readonly ConcurrentDictionary<string, string> OnlineUsers = new();
-    
     public override async Task OnConnectedAsync()
     {
         Log.Information("OnConnectedAsync");
@@ -20,7 +19,7 @@ public class ChatHub(AppDbContext db) : Hub
 
         if (!string.IsNullOrEmpty(id))
         {
-            OnlineUsers[id] = Context.ConnectionId;
+            await redisService.SetContentAsync(id, "ChatHub", Context.ConnectionId, TimeSpan.FromHours(1));
             Log.Information($"User {id} connected with connectionId {Context.ConnectionId}");
         }
         
@@ -46,7 +45,7 @@ public class ChatHub(AppDbContext db) : Hub
         var userId = Context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (!string.IsNullOrEmpty(userId))
         {
-            OnlineUsers.TryRemove(userId, out _);
+            redisService.DeleteContentAsync(userId, "ChatHub");
             Log.Information($"User {userId} disconnected");
         }
         return base.OnDisconnectedAsync(exception);
@@ -75,8 +74,9 @@ public class ChatHub(AppDbContext db) : Hub
         await db.SaveChangesAsync();
 
         Log.Information($"Message from {senderId} to {receiverId}: {message}");
-        
-        if (OnlineUsers.TryGetValue(receiverId, out string connectionId))
+
+        var connectionId = await redisService.GetContentAsync(receiverId, "ChatHub");
+        if (connectionId != null)
         {
             await Clients.Client(connectionId).SendAsync("ReceiveMessage", newMessage);
             Log.Information("Receiver is online. Message sent via SignalR.");
