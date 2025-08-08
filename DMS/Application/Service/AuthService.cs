@@ -14,8 +14,7 @@ public class AuthService(
     IUserService userService,
     IConfiguration config,
     IRedisService redisService,
-    AppDbContext dbContext,
-    IEmailService emailService)
+    AppDbContext dbContext)
     : IAuthService
 {
     public async Task<LoginResponse> Login(LoginRequest request)
@@ -85,18 +84,7 @@ public class AuthService(
     public async Task<UserResponseWithDepartments> Register(RegisterRequest request)
     {
         Log.Information(config["log:auth:service:register"] + request.Email);
-        string random = Guid.NewGuid().ToString();
         var userResponseWithDepartments = await userService.CreateUser(request);
-        
-        await redisService.SetContentAsync(userResponseWithDepartments.Id,
-            "verification", random, TimeSpan.FromDays(1));
-        
-        await emailService.SendEmailAsync(request.Email, "Verification DMS", 
-            "https://localhost:7035/api/v1/user/verify?userId="+
-            userResponseWithDepartments.Id+
-            "&code="+random);
-        
-        Log.Information("send mail" + request.Email);
         
         return userResponseWithDepartments;
     }

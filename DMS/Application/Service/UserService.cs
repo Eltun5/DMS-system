@@ -12,7 +12,8 @@ namespace WebApplication1.Application.Service;
 public class UserService(IMapper mapper,
     IUserRepository userRepository,
     IConfiguration config,
-    IRedisService redisService)
+    IRedisService redisService,
+    IEmailService emailService)
     : IUserService
 {
     public async Task<UserResponseWithDepartments> CreateUser(RegisterRequest request)
@@ -21,8 +22,21 @@ public class UserService(IMapper mapper,
         VerifyCanCreateUserWithThisField(request);
 
         var user = InitializeUser(request);
-
+        
         var response = mapper.Map<UserResponseWithDepartments>(await userRepository.CreateUser(user));
+        
+        string random = Guid.NewGuid().ToString();
+        
+        await redisService.SetContentAsync(response.Id,
+            "verification", random, TimeSpan.FromDays(1));
+        
+        await emailService.SendEmailAsync(request.Email, "Verification DMS", 
+            "https://localhost:7035/api/v1/user/verify?userId=" +
+            response.Id +
+            "&code=" + random);
+        
+        Log.Information("send mail" + request.Email);
+        
         Log.Information(config["log:user:service:create:success"]!);
         return response;
     }
