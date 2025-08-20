@@ -1,0 +1,94 @@
+2025-08-02 10:11:53.428 +04:00 [INF] Database Initialized.
+2025-08-02 10:11:53.594 +04:00 [INF] CustomBackgroundService is working.
+2025-08-02 10:11:53.750 +04:00 [INF] No old user password histories found.
+2025-08-02 10:11:53.751 +04:00 [INF] Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: 
+2025-08-02 10:13:11.495 +04:00 [INF] Database Initialized.
+2025-08-02 10:13:11.659 +04:00 [INF] CustomBackgroundService is working.
+2025-08-02 10:13:11.782 +04:00 [INF] No old user password histories found.
+2025-08-02 10:13:11.783 +04:00 [INF] Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: 
+2025-08-02 10:13:23.423 +04:00 [INF] Someone try to register. Email : aslanoveltun28@gmail.com
+2025-08-02 10:13:23.425 +04:00 [INF] Someone try to create a user.
+2025-08-02 10:16:29.058 +04:00 [INF] Database Initialized.
+2025-08-02 10:16:29.214 +04:00 [INF] CustomBackgroundService is working.
+2025-08-02 10:16:29.330 +04:00 [INF] No old user password histories found.
+2025-08-02 10:16:29.331 +04:00 [INF] Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: 
+2025-08-02 10:16:49.645 +04:00 [INF] Someone try to register. Email : aslanoveltun28@gmail.com
+2025-08-02 10:16:49.646 +04:00 [INF] Someone try to create a user.
+2025-08-02 10:16:50.473 +04:00 [INF] User created successfully.
+2025-08-02 10:20:05.407 +04:00 [INF] Someone try to register. Email : aslanoveltun28@gmail.com
+2025-08-02 10:20:05.407 +04:00 [INF] Someone try to create a user.
+2025-08-02 10:20:05.629 +04:00 [INF] User created successfully.
+2025-08-02 10:33:06.326 +04:00 [INF] Database Initialized.
+2025-08-02 10:33:06.471 +04:00 [INF] CustomBackgroundService is working.
+2025-08-02 10:33:06.611 +04:00 [INF] No old user password histories found.
+2025-08-02 10:33:06.612 +04:00 [INF] Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: 
+2025-08-02 10:33:14.626 +04:00 [INF] Someone try to register. Email : aslanoveltun28@gmail.com
+2025-08-02 10:33:14.628 +04:00 [INF] Someone try to create a user.
+2025-08-02 10:33:26.215 +04:00 [INF] Someone try to register. Email : aslanoveltun28@gmail.com
+2025-08-02 10:33:26.215 +04:00 [INF] Someone try to create a user.
+2025-08-02 10:33:27.204 +04:00 [INF] User created successfully.
+2025-08-02 10:33:31.185 +04:00 [INF] send mailaslanoveltun28@gmail.com
+2025-08-02 10:36:50.593 +04:00 [INF] Someone try to verify user.
+2025-08-02 10:44:41.253 +04:00 [INF] Database Initialized.
+2025-08-02 10:44:41.397 +04:00 [INF] CustomBackgroundService is working.
+2025-08-02 10:44:41.543 +04:00 [INF] No old user password histories found.
+2025-08-02 10:44:41.545 +04:00 [INF] Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: 
+2025-08-02 10:45:04.636 +04:00 [INF] aslanoveltun28@gmail.com
+2025-08-02 10:45:05.388 +04:00 [INF] AccessToken generated. AccessToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY0MGUzY2MxLTc5M2EtNDc0NS04Njg1LWFhNTJiOGE5YWVkOSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJFbHR1biBBc2xhbm92IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiRW1wbG95ZWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhc2xhbm92ZWx0dW4yOEBnbWFpbC5jb20iLCJleHAiOjE3NTQxMjA3MDUsImlzcyI6IkRlcGFydG1lbnRNYW5hZ2VtZW50QXBpIiwiYXVkIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRDbGllbnQifQ.t8H9TDwDFVahPrttsvjhCGcRUuZ1v5Rz7Q4OyQqSwR3-VXplZ6_IIoM4M4qV5Egq20WEw5pQ4WyNRhK5mKRIRg
+2025-08-02 10:45:05.390 +04:00 [INF] RefreshToken generated. RefreshToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY0MGUzY2MxLTc5M2EtNDc0NS04Njg1LWFhNTJiOGE5YWVkOSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFzbGFub3ZlbHR1bjI4QGdtYWlsLmNvbSIsImV4cCI6MTc1NDEyMDcwNSwiaXNzIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRBcGkiLCJhdWQiOiJEZXBhcnRtZW50TWFuYWdlbWVudENsaWVudCJ9.Q8dyHfGPlQ64w6yeyH4k0cguRLaQFKDNhkfF3EDFbZSKAnrr8CUI8FqKbKP6iQn2uNwlXowYRCxH1shqVJz-Mg
+2025-08-02 10:45:09.154 +04:00 [INF] Someone try to get all users.
+2025-08-02 10:45:23.115 +04:00 [INF] OnConnectedAsync
+2025-08-02 10:45:23.115 +04:00 [INF] User id is : 640e3cc1-793a-4745-8685-aa52b8a9aed9
+2025-08-02 10:45:23.117 +04:00 [INF] User 640e3cc1-793a-4745-8685-aa52b8a9aed9 connected with connectionId ASR_ohZdhe0BYNaexul1yA
+2025-08-02 10:45:23.145 +04:00 [INF] Undelivered messages are : 0
+2025-08-02 10:46:08.168 +04:00 [INF] Sending message to id : 4fbc78c6-58e3-433a-95ee-0461aa4084d7
+2025-08-02 10:46:08.274 +04:00 [INF] Message from 640e3cc1-793a-4745-8685-aa52b8a9aed9 to 4fbc78c6-58e3-433a-95ee-0461aa4084d7: Salam
+2025-08-02 10:46:08.281 +04:00 [INF] Receiver is offline. Message saved to DB only.
+2025-08-02 10:46:33.088 +04:00 [INF] Sending message to id : 640e3cc1-793a-4745-8685-aa52b8a9aed9
+2025-08-02 10:46:33.101 +04:00 [INF] Message from 640e3cc1-793a-4745-8685-aa52b8a9aed9 to 640e3cc1-793a-4745-8685-aa52b8a9aed9: Salam
+2025-08-02 10:46:33.103 +04:00 [INF] Receiver is online. Message sent via SignalR.
+2025-08-02 10:48:08.289 +04:00 [INF] User 640e3cc1-793a-4745-8685-aa52b8a9aed9 disconnected
+2025-08-02 10:48:12.246 +04:00 [INF] admin1234@gmail.com
+2025-08-02 10:48:21.724 +04:00 [INF] OnConnectedAsync
+2025-08-02 10:48:21.724 +04:00 [INF] User id is : 640e3cc1-793a-4745-8685-aa52b8a9aed9
+2025-08-02 10:48:21.725 +04:00 [INF] User 640e3cc1-793a-4745-8685-aa52b8a9aed9 connected with connectionId rBSXqt6d_G1wquHn76zOFw
+2025-08-02 10:48:21.730 +04:00 [INF] Undelivered messages are : 1
+2025-08-02 10:48:39.636 +04:00 [INF] User 640e3cc1-793a-4745-8685-aa52b8a9aed9 disconnected
+2025-08-02 10:48:43.935 +04:00 [INF] aslanoveltun28@gmail.com
+2025-08-02 10:48:44.126 +04:00 [INF] AccessToken generated. AccessToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY0MGUzY2MxLTc5M2EtNDc0NS04Njg1LWFhNTJiOGE5YWVkOSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJFbHR1biBBc2xhbm92IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiRW1wbG95ZWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhc2xhbm92ZWx0dW4yOEBnbWFpbC5jb20iLCJleHAiOjE3NTQxMjA5MjQsImlzcyI6IkRlcGFydG1lbnRNYW5hZ2VtZW50QXBpIiwiYXVkIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRDbGllbnQifQ.xYIl7xmA4ATyC3kLlgWMoecSiMJCicTcIHsTVsIKQPt_kJy9fF4w-VYA4BKkjqyDNBLmcHeq6MySCdAulMlFkw
+2025-08-02 10:48:44.126 +04:00 [INF] RefreshToken generated. RefreshToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY0MGUzY2MxLTc5M2EtNDc0NS04Njg1LWFhNTJiOGE5YWVkOSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFzbGFub3ZlbHR1bjI4QGdtYWlsLmNvbSIsImV4cCI6MTc1NDEyMDkyNCwiaXNzIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRBcGkiLCJhdWQiOiJEZXBhcnRtZW50TWFuYWdlbWVudENsaWVudCJ9.FyZ5asjCZqGiDeSyHQEfyfLOVBN8TYA5ZDIhLk3KPSKeVXs9dBEe9JaGP7tp8HMkoZscabt7F1n7uIq5zajpiw
+2025-08-02 10:48:49.894 +04:00 [INF] OnConnectedAsync
+2025-08-02 10:48:49.894 +04:00 [INF] User id is : 640e3cc1-793a-4745-8685-aa52b8a9aed9
+2025-08-02 10:48:49.895 +04:00 [INF] User 640e3cc1-793a-4745-8685-aa52b8a9aed9 connected with connectionId jMjRXmo4QPdSQOAtwEWgRw
+2025-08-02 10:48:49.899 +04:00 [INF] Undelivered messages are : 0
+2025-08-02 10:49:23.965 +04:00 [INF] User 640e3cc1-793a-4745-8685-aa52b8a9aed9 disconnected
+2025-08-02 10:49:28.655 +04:00 [INF] aslanoveltun28@gmail.com
+2025-08-02 10:49:28.850 +04:00 [INF] AccessToken generated. AccessToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY0MGUzY2MxLTc5M2EtNDc0NS04Njg1LWFhNTJiOGE5YWVkOSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJFbHR1biBBc2xhbm92IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiRW1wbG95ZWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhc2xhbm92ZWx0dW4yOEBnbWFpbC5jb20iLCJleHAiOjE3NTQxMjA5NjgsImlzcyI6IkRlcGFydG1lbnRNYW5hZ2VtZW50QXBpIiwiYXVkIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRDbGllbnQifQ.-TokJsvKj8kcgEd2OmMzKAWWM96MWmoDcr_N9VZ_G1m5CzB-v2kpDl9i8BQ6Z0YMUNqbPh1hYEFl4k0ubKm_SQ
+2025-08-02 10:49:28.850 +04:00 [INF] RefreshToken generated. RefreshToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY0MGUzY2MxLTc5M2EtNDc0NS04Njg1LWFhNTJiOGE5YWVkOSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFzbGFub3ZlbHR1bjI4QGdtYWlsLmNvbSIsImV4cCI6MTc1NDEyMDk2OCwiaXNzIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRBcGkiLCJhdWQiOiJEZXBhcnRtZW50TWFuYWdlbWVudENsaWVudCJ9.fYXStcZ0AAtYTNUDeI7DhFP5FtCodz9Fvk3FkI9g3ByBXB4m5PpwZiahrxbdV8xvEq1C1H0dS3mz0CeLa9A7XA
+2025-08-02 10:49:40.184 +04:00 [INF] admin1234@gmail.com
+2025-08-02 10:50:25.220 +04:00 [INF] Database Initialized.
+2025-08-02 10:50:25.388 +04:00 [INF] CustomBackgroundService is working.
+2025-08-02 10:50:25.509 +04:00 [INF] No old user password histories found.
+2025-08-02 10:50:25.510 +04:00 [INF] Pay employees salary. Imagine this is code for contact user card info and transfer salary for employees. Employee count: 
+2025-08-02 10:56:34.141 +04:00 [INF] aslanoveltun28@gmail.com
+2025-08-02 10:56:34.534 +04:00 [INF] Email is wrong. Email : aslanoveltun28@gmail.com
+2025-08-02 10:57:13.767 +04:00 [INF] Someone try to register. Email : aslanoveltun28@gmail.com
+2025-08-02 10:57:13.768 +04:00 [INF] Someone try to create a user.
+2025-08-02 10:57:14.081 +04:00 [INF] User created successfully.
+2025-08-02 10:57:16.603 +04:00 [INF] send mailaslanoveltun28@gmail.com
+2025-08-02 10:57:27.191 +04:00 [INF] Someone try to verify user.
+2025-08-02 10:57:47.669 +04:00 [INF] Someone try to get all users.
+2025-08-02 10:58:00.033 +04:00 [INF] aslanoveltun28@gmail.com
+2025-08-02 10:58:00.286 +04:00 [INF] AccessToken generated. AccessToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjBlZDI1ZTdkLTQ1NzgtNGQwOS04ODNkLTE0ZmExY2ZiY2ZmZCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJFbHR1biBBc2xhbm92IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiRW1wbG95ZWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhc2xhbm92ZWx0dW4yOEBnbWFpbC5jb20iLCJleHAiOjE3NTQxMjE0ODAsImlzcyI6IkRlcGFydG1lbnRNYW5hZ2VtZW50QXBpIiwiYXVkIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRDbGllbnQifQ.hQtCyBtkvOcWVlwexwmP-hLp1FPuO_lexmgIBekYFJ4HNbfAgrAG6nZjhnmpqx5oWAACaxlPvCy1Cb_kLnziwg
+2025-08-02 10:58:00.287 +04:00 [INF] RefreshToken generated. RefreshToken : eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjBlZDI1ZTdkLTQ1NzgtNGQwOS04ODNkLTE0ZmExY2ZiY2ZmZCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFzbGFub3ZlbHR1bjI4QGdtYWlsLmNvbSIsImV4cCI6MTc1NDEyMTQ4MCwiaXNzIjoiRGVwYXJ0bWVudE1hbmFnZW1lbnRBcGkiLCJhdWQiOiJEZXBhcnRtZW50TWFuYWdlbWVudENsaWVudCJ9.TW5Avn9FSqDjfbhNr51MCqIBxcYuVoGEWL9sDoL-njAbFKnwYRCUBMhgV_MbnIvHoDFMl0x4uBK0sv4MULbKmA
+2025-08-02 10:58:04.689 +04:00 [INF] OnConnectedAsync
+2025-08-02 10:58:04.690 +04:00 [INF] User id is : 0ed25e7d-4578-4d09-883d-14fa1cfbcffd
+2025-08-02 10:58:04.691 +04:00 [INF] User 0ed25e7d-4578-4d09-883d-14fa1cfbcffd connected with connectionId 2rbut6JEZv9yKRy0anU_cg
+2025-08-02 10:58:04.730 +04:00 [INF] Undelivered messages are : 0
+2025-08-02 10:58:34.696 +04:00 [INF] Sending message to id : 0ed25e7d-4578-4d09-883d-14fa1cfbcffd
+2025-08-02 10:58:34.744 +04:00 [INF] Message from 0ed25e7d-4578-4d09-883d-14fa1cfbcffd to 0ed25e7d-4578-4d09-883d-14fa1cfbcffd: Salam
+2025-08-02 10:58:34.755 +04:00 [INF] Receiver is online. Message sent via SignalR.
+2025-08-02 10:58:49.882 +04:00 [INF] Sending message to id : 0ed25e7d-4578-4d09-883d-14fa1cfbcffd
+2025-08-02 10:58:49.891 +04:00 [INF] Message from 0ed25e7d-4578-4d09-883d-14fa1cfbcffd to 0ed25e7d-4578-4d09-883d-14fa1cfbcffd: Salam
+2025-08-02 10:58:49.892 +04:00 [INF] Receiver is online. Message sent via SignalR.
+2025-08-02 11:10:14.296 +04:00 [INF] User 0ed25e7d-4578-4d09-883d-14fa1cfbcffd disconnected

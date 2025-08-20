@@ -1,17 +1,22 @@
 using System.Text.Json.Serialization;
-using DepartmentManagementApp.Domain.Enums;
+using WebApplication1.Domain.Enums;
 
-namespace DepartmentManagementApp.Application.DTOs.Responses;
+namespace WebApplication1.Application.DTOs.Responses;
 
 public record UserResponse(
     string Id,
     string FullName,
-    string PhoneNumber,
     string Email,
+    int age,
+    string PhoneNumber,
     [property: JsonConverter(typeof(JsonStringEnumConverter))]
     Role Role,
     string Location,
     double Salary,
     string AdditionalInfo,
+    bool IsActive,
+    bool IsVerified,
+    bool IsDeleted,
+    DateTime nextTimeToChangePassword,
     DateTime CreatedAt,
     DateTime UpdatedAt);

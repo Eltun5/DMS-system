@@ -1,4 +1,4 @@
-namespace DepartmentManagementApp.Domain.Enums;
+namespace WebApplication1.Domain.Enums;
 
 public enum Role
 {

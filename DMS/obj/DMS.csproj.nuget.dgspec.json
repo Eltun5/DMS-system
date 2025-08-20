@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/eltun/RiderProjects/WebApplication1/DMS/DMS.csproj": {}
+    "/home/eltun/RiderProjects/DMS/DMS/DMS.csproj": {}
   },
   "projects": {
-    "/home/eltun/RiderProjects/WebApplication1/DMS/DMS.csproj": {
+    "/home/eltun/RiderProjects/DMS/DMS/DMS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/eltun/RiderProjects/WebApplication1/DMS/DMS.csproj",
+        "projectUniqueName": "/home/eltun/RiderProjects/DMS/DMS/DMS.csproj",
         "projectName": "DMS",
-        "projectPath": "/home/eltun/RiderProjects/WebApplication1/DMS/DMS.csproj",
+        "projectPath": "/home/eltun/RiderProjects/DMS/DMS/DMS.csproj",
         "packagesPath": "/home/eltun/.nuget/packages/",
-        "outputPath": "/home/eltun/RiderProjects/WebApplication1/DMS/obj/",
+        "outputPath": "/home/eltun/RiderProjects/DMS/DMS/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/eltun/.nuget/NuGet/NuGet.Config"
@@ -61,6 +61,10 @@
               "target": "Package",
               "version": "[9.0.7, )"
             },
+            "Microsoft.AspNetCore.SignalR.Client": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.0.7, )"
@@ -98,6 +102,10 @@
             "Serilog.Sinks.File": {
               "target": "Package",
               "version": "[7.0.0, )"
+            },
+            "Swashbuckle.AspNetCore.Annotations": {
+              "target": "Package",
+              "version": "[9.0.3, )"
             },
             "Swashbuckle.AspNetCore.SwaggerUI": {
               "target": "Package",

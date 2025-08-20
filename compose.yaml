@@ -1,6 +1,4 @@
-﻿version: '3.8'
-
-services:
+﻿services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
@@ -15,14 +13,3 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
-
-  webapi:
-    build:
-      context: ./DMS
-      dockerfile: Dockerfile
-    container_name: dms-webapi
-    ports:
-      - "5000:80"
-    depends_on:
-      - sqlserver
-      - redis

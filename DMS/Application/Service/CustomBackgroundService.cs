@@ -1,8 +1,8 @@
-using DepartmentManagementApp.Domain.Models;
-using DepartmentManagementApp.Infrastructure.DBContext;
 using Serilog;
+using WebApplication1.Domain.Models;
+using WebApplication1.Infrastructure.DBContext;
 
-namespace DepartmentManagementApp.Application.Service;
+namespace WebApplication1.Application.Service;
 
 public class CustomBackgroundService : BackgroundService
 {

@@ -1,17 +1,19 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Domain.Models;
+using WebApplication1.Infrastructure.DBContext;
 
-namespace DepartmentManagementApp.API.Controllers;
+namespace WebApplication1.API.Controllers;
 
 [Route("api/v1/test")]
 [ApiController]
-public class TestController : ControllerBase
+public class TestController(AppDbContext db) : ControllerBase
 {
     [HttpGet]
     [Authorize]
-    public string Get()
+    public IEnumerable<Message> Get()
     {
-        return "Hello!";
+        return db.Messages.ToList();
     }
 
     [HttpGet("test")]
@@ -26,16 +28,16 @@ public class TestController : ControllerBase
         return "Hello Poost";
     }
 
-    [HttpPut("{id}")]
-    public string Update(int id)
+    [HttpPut]
+    public string Update([FromQuery]int id)
     {
         return "Hello Update id : " + id;
     }
     
-    [HttpDelete("{id}")]
+    [HttpDelete]
     [Authorize(Roles = "Admin")]
-    public string Delete(int id)
+    public string Delete([FromQuery]int id)
     {
-        return "Hello Delete id : " + id;
+        return "Hello Admin Delete id : " + id;
     }
 }

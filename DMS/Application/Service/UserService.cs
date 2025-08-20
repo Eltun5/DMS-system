@@ -1,128 +1,223 @@
 using AutoMapper;
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Application.DTOs.Responses;
-using DepartmentManagementApp.Application.Interfaces;
-using DepartmentManagementApp.Domain.Enums;
-using DepartmentManagementApp.Domain.Models;
-using DepartmentManagementApp.Infrastructure.Interfaces;
 using Serilog;
+using WebApplication1.Application.DTOs.Requests;
+using WebApplication1.Application.DTOs.Responses;
+using WebApplication1.Application.Interfaces;
+using WebApplication1.Domain.Enums;
+using WebApplication1.Domain.Models;
+using WebApplication1.Infrastructure.Interfaces;
 
-namespace DepartmentManagementApp.Application.Service;
+namespace WebApplication1.Application.Service;
 
-public class UserService : IUserService
+public class UserService(IMapper mapper,
+    IUserRepository userRepository,
+    IConfiguration config,
+    IRedisService redisService,
+    IEmailService emailService)
+    : IUserService
 {
-    private readonly IMapper _mapper;
-    
-    private readonly IUserRepository _userRepository;
-
-    private readonly IConfiguration _config;
-
-    public UserService(IMapper mapper, IUserRepository userRepository, IConfiguration config)
+    public async Task<UserResponseWithDepartments> CreateUser(RegisterRequest request)
     {
-        _mapper = mapper;
-        _userRepository = userRepository;
-        _config = config;
-    }
-
-    public UserResponse CreateUser(RegisterRequest request)
-    {
-        Log.Information(_config["log:user:service:create:try"]!);
+        Log.Information(config["log:user:service:create:try"]!);
         VerifyCanCreateUserWithThisField(request);
 
         var user = InitializeUser(request);
-
-        var response = _mapper.Map<UserResponse>(_userRepository.CreateUser(user));
-        Log.Information(_config["log:user:service:create:success"]!);
+        
+        var response = mapper.Map<UserResponseWithDepartments>(await userRepository.CreateUser(user));
+        
+        string random = Guid.NewGuid().ToString();
+        
+        await redisService.SetContentAsync(response.Id,
+            "verification", random, TimeSpan.FromDays(1));
+        
+        await emailService.SendEmailAsync(request.Email, "Verification DMS", 
+            "https://localhost:7035/api/v1/user/verify?userId=" +
+            response.Id +
+            "&code=" + random);
+        
+        Log.Information("send mail" + request.Email);
+        
+        Log.Information(config["log:user:service:create:success"]!);
         return response;
     }
 
-    public UserResponse GetUserById(string id)
+    public async Task<UserResponseWithDepartments> GetUserById(string id)
     {
-        Log.Information(_config["log:user:service:get-by-id"]! + id);
-        return _mapper.Map<UserResponse>(_userRepository.GetUserById(id));
+        Log.Information(config["log:user:service:get-by-id"]! + id);
+        return mapper.Map<UserResponseWithDepartments>(await userRepository.GetUserById(id));
     }
 
-    public UserResponse GetUserByEmail(string email)
+    public async Task<UserResponseWithDepartments> GetUserByEmail(string email)
     {
-        Log.Information(_config["log:user:service:get-by-email"]! + email);
-        return _mapper.Map<UserResponse>(_userRepository.GetUserByEmail(email));
+        Log.Information(config["log:user:service:get-by-email"]! + email);
+        return mapper.Map<UserResponseWithDepartments>(await userRepository.GetUserByEmail(email));
     }
 
-    public UserResponse GetUserByUserName(string fullName)
+    public async Task<UserResponseWithDepartments> GetUserByUserName(string fullName)
     {
-        Log.Information(_config["log:user:service:get-by-full-name"]! + fullName);
-        return _mapper.Map<UserResponse>(_userRepository.GetUserByUserName(fullName));
+        Log.Information(config["log:user:service:get-by-full-name"]! + fullName);
+        return mapper.Map<UserResponseWithDepartments>(await userRepository.GetUserByUserName(fullName));
     }
 
-    public UserResponse GetUserByPhoneNumber(string phoneNumber)
+    public async Task<UserResponseWithDepartments> GetUserByPhoneNumber(string phoneNumber)
     {
-        Log.Information(_config["log:user:service:get-by-phone-number"]! + phoneNumber);
-        return _mapper.Map<UserResponse>(_userRepository.GetUserByPhoneNumber(phoneNumber));
+        Log.Information(config["log:user:service:get-by-phone-number"]! + phoneNumber);
+        return mapper.Map<UserResponseWithDepartments>(await userRepository.GetUserByPhoneNumber(phoneNumber));
     }
 
-    public IEnumerable<UserResponse> GetAllUsers()
+    public async Task<IEnumerable<UserResponseWithDepartments>> GetAllUsers()
     {
-        Log.Information(_config["log:user:service:get-all"]!);
-        return _mapper.Map<List<User>, List<UserResponse>>(_userRepository.GetAllUsers());
+        Log.Information(config["log:user:service:get-all"]!);
+        return mapper.Map<IEnumerable<User>, IEnumerable<UserResponseWithDepartments>>(await userRepository.GetAllUsers());
     }
 
-    public string ChangePassword(string email, string oldPassword, string newPassword)
+    public async Task<IEnumerable<UserResponseWithDepartments>> GetAllUsersByRole(string role)
     {
-        Log.Information(_config["log:user:service:change-password:try"]!);
-        var user = _userRepository.GetUserByEmail(email);
+        Log.Information(config["log:user:service:get-all-roles"]!);
+        Role role1 = (Role)Enum.Parse(typeof(Role), role);
+        return mapper.Map<IEnumerable<User>, IEnumerable<UserResponseWithDepartments>>(
+            await userRepository.GetAllUsersByRole(role1));
+    }
+
+    public async Task<IEnumerable<UserResponseWithDepartments>> GetActiveUsers()
+    {
+        Log.Information(config["log:user:service:get-active-user"]!);
+        return mapper.Map<IEnumerable<User>, IEnumerable<UserResponseWithDepartments>>(await userRepository.GetActiveUsers());
+    }
+
+    public async Task<IEnumerable<UserResponseWithDepartments>> GetDeactivateUsers()
+    {
+        Log.Information(config["log:user:service:get-deactivated-user"]!);
+        return mapper.Map<IEnumerable<User>, IEnumerable<UserResponseWithDepartments>>(await userRepository.GetDeactivateUsers());
+    }
+
+    public async Task<IEnumerable<UserResponseWithDepartments>> GetDeletedUsers()
+    {
+        Log.Information(config["log:user:service:get-deleted-user"]!);
+        return mapper.Map<IEnumerable<User>, IEnumerable<UserResponseWithDepartments>>(await userRepository.GetDeletedUsers());
+    }
+
+    public async Task<string> ChangePassword(ChangePasswordRequest request)
+    {
+        Log.Information(config["log:user:service:change-password:try"]!);
+        var user = await userRepository.GetById(request.UserId);
         
         if (user == null)
         {
-            Log.Information(_config["log:user:service:change-password:user-not-found-by-email"]! + email);
+            Log.Information(config["log:user:service:change-password:user-not-found-by-user-id"]! + request.UserId);
             throw new ArgumentException("User is not found.");
         }
 
-        if (!BCrypt.Net.BCrypt.Verify(oldPassword, user.Password))
+        if (!BCrypt.Net.BCrypt.Verify(request.OldPassword, user.Password))
         {
-            Log.Information(_config["log:user:service:change-password:wrong-old-password"]!);
-            throw new ArgumentException("Old password is wrong. Please enter correct password.");
+            Log.Information(config["log:user:service:change-password:wrong-old-password"]!);
+            throw new ArgumentException(config["log:user:service:change-password:wrong-old-password-exception"]!);
         }
         
-        user.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
-        user.nextTimeToChangePassword = DateTime.Now.AddDays(30);
+        user.Password = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+        user.NextTimeToChangePassword = DateTime.Now.AddDays(30);
         user.UpdatedAt = DateTime.Now;
         
-        return _config["log:user:service:change-password:success"]!;
+        await userRepository.UpdateUserPassword(user);
+        
+        return config["log:user:service:change-password:success"]!;
     }
 
-    public UserResponse UpdateUser(string id, RegisterRequest request)
+    public async Task<UserResponseWithDepartments> AddDepartmentInUser(string userId, string departmentId)
     {
-        Log.Information(_config["log:user:service:update:try"]!);
+        Log.Information(config["log:user:service:add-department"]!);
+        return mapper.Map<UserResponseWithDepartments>(await userRepository.AddDepartmentInUser(userId, departmentId));
+    }
+
+    public async Task<UserResponseWithDepartments> RemoveDepartmentInUser(string userId, string departmentId)
+    {
+        Log.Information(config["log:user:service:remove-department"]!);
+        return mapper.Map<UserResponseWithDepartments>(await userRepository.RemoveDepartmentInUser(userId, departmentId));
+    }
+
+    public async Task<UserResponseWithDepartments> ChangeUserSalary(string userId, int salary)
+    {
+        Log.Information(config["log:user:service:change-user-salary"]!);
+        return mapper.Map<UserResponseWithDepartments>(await userRepository.ChangeUserSalary(userId, salary));
+    }
+
+    public async Task<UserResponseWithDepartments> ChangeUserRole(string userId, string role)
+    {
+        Log.Information(config["log:user:service:change-user-role"]!);
+        Role role1 = (Role)Enum.Parse(typeof(Role), role);
+        return mapper.Map<UserResponseWithDepartments>(await userRepository.ChangeUserRole(userId, role1));
+    }
+
+    public async Task<UserResponseWithDepartments> DeactivateUser(string userId)
+    {
+        Log.Information(config["log:user:service:deactivate-user"]!);
+        return mapper.Map<UserResponseWithDepartments>(await userRepository.DeactivateUser(userId));
+    }
+
+    public async Task<UserResponseWithDepartments> ActivateUser(string userId)
+    {
+        Log.Information(config["log:user:service:activate-user"]!);
+        return mapper.Map<UserResponseWithDepartments>(await userRepository.ActivateUser(userId));
+    }
+
+    public async Task<UserResponseWithDepartments?> VerifyUser(string userId, string code)
+    {
+        Log.Information(config["log:user:service:verify-user"]!);
         
+        var redisCode = await redisService.GetContentAsync(userId, "verification");
+
+        if (code.Equals(redisCode))
+        {
+            return mapper.Map<UserResponseWithDepartments>(await userRepository.VerifyUser(userId));
+        }
         return null;
     }
 
-    public void DeleteUser(string id)
+    public async Task<UserResponseWithDepartments> UpdateUser(string userId, UpdateUserRequest request)
     {
-        Log.Information(_config["log:user:service:delete"]! + id);
-        var user = _userRepository.GetUserById(id);
+        Log.Information(config["log:user:service:update:try"]!);
+
+        var user = await userRepository.GetById(userId);
+
+        if (user == null) 
+            throw new ArgumentException(config["log:user:service:update:user-not-found"]!);
+
+        var updatedUser = MapRequestToUserForUpdate(user, request);
+
+        updatedUser.UpdatedAt = DateTime.Now;
+        var newUser = await userRepository.UpdateUser(updatedUser);
+        
+        Log.Information(config["log:user:service:update:success"]!);
+        
+        return mapper.Map<UserResponseWithDepartments>(newUser);
+    }
+
+    public async Task DeleteUser(string id)
+    {
+        Log.Information(config["log:user:service:delete"]! + id);
+        var user = await userRepository.GetById(id);
         if (user != null)
         {
             user.IsDeleted = true;
-            _userRepository.UpdateUser(user);
+            await userRepository.UpdateUser(user);
         }
     }
 
     private void VerifyCanCreateUserWithThisField(RegisterRequest request)
     {
-        if (_userRepository.ExistsByEmail(request.Email))
-            throw new ArgumentException(_config["log:user:service:create:email"]!);
+        if (userRepository.ExistsByEmail(request.Email))
+            throw new ArgumentException(config["log:user:service:create:email"]!);
 
-        if (_userRepository.ExistsByFullName(request.FullName))
-            throw new ArgumentException(_config["log:user:service:create:full-name"]!);
+        if (userRepository.ExistsByFullName(request.FullName))
+            throw new ArgumentException(config["log:user:service:create:full-name"]!);
 
-        if (_userRepository.ExistsByPhoneNumber(request.PhoneNumber))
-            throw new ArgumentException(_config["log:user:service:create:phone-number"]!);
+        if (userRepository.ExistsByPhoneNumber(request.PhoneNumber))
+            throw new ArgumentException(config["log:user:service:create:phone-number"]!);
     }
 
     private User InitializeUser(RegisterRequest request)
     {
-        User user = _mapper.Map<User>(request);
+        User user = mapper.Map<User>(request);
         user.Id = Guid.NewGuid();
         user.CreatedAt = DateTime.Now;
         user.IsActive = true;
@@ -130,8 +225,20 @@ public class UserService : IUserService
         user.IsVerified = false;
         user.Salary = 0;
         user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
-        user.nextTimeToChangePassword = DateTime.Now.AddDays(30);
+        user.NextTimeToChangePassword = DateTime.Now.AddDays(30);
         user.Role = Role.Employee;
+        return user;
+    }
+
+    private User MapRequestToUserForUpdate(User user, UpdateUserRequest request)
+    {
+        user.FullName = request.FullName;
+        user.Email = request.Email;
+        user.Age = request.Age;
+        user.PhoneNumber = request.PhoneNumber;
+        user.Location = request.Location;
+        user.AdditionalInfo = request.AdditionalInfo;
+
         return user;
     }
 }

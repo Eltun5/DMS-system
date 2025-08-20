@@ -1,13 +1,13 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using DepartmentManagementApp.Application.DTOs.Responses;
-using DepartmentManagementApp.Application.Interfaces;
-using DepartmentManagementApp.Domain.Models;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using WebApplication1.Application.DTOs.Responses;
+using WebApplication1.Application.Interfaces;
+using WebApplication1.Domain.Models;
 
-namespace DepartmentManagementApp.Application.Service;
+namespace WebApplication1.Application.Service;
 
 public class JwtService : IJwtService
 {
@@ -23,10 +23,13 @@ public class JwtService : IJwtService
 
     public LoginResponse GenerateToken(User user)
     {
-        return new LoginResponse(GenerateAccessToken(user),int.Parse(_config["Jwt:ExpiresInMinutes"]!), GenerateRefreshToken(user));
+        return new LoginResponse(
+            GenerateAccessToken(user),
+            int.Parse(_config["Jwt:ExpiresInMinutes"]!), 
+            GenerateRefreshToken(user));
     }
     
-    public string? getUserIdFromToken(string token)
+    public string? GetUserIdFromToken(string token)
     {
         var decodedPrincipal = DecodeJwtToken(token);
 
@@ -37,22 +40,6 @@ public class JwtService : IJwtService
             Log.Information(_config["log:Jwt:get-user-id"] + userId);
 
             return userId;
-        }
-
-        return null;
-    }
-    
-    public string? getEmailFromToken(string token)
-    {
-        var decodedPrincipal = DecodeJwtToken(token);
-
-        if (decodedPrincipal != null)
-        {
-            var email = decodedPrincipal.FindFirst(ClaimTypes.Email)?.Value;
-
-            Log.Information(_config["log:Jwt:get-email"] + email);
-
-            return email;
         }
 
         return null;
@@ -68,8 +55,8 @@ public class JwtService : IJwtService
             new Claim(ClaimTypes.Email, user.Email)
         };
 
-        var key = new SymmetricSecurityKey(this.key);
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
+        var symmetricSecurityKey = new SymmetricSecurityKey(this.key);
+        var creds = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha512);
         var expires = DateTime.Now.AddMinutes(Convert.ToDouble(_config["Jwt:ExpiresInMinutes"]));
 
         var token = new JwtSecurityToken(
@@ -95,8 +82,8 @@ public class JwtService : IJwtService
             new Claim(ClaimTypes.Email, user.Email)
         };
 
-        var key = new SymmetricSecurityKey(this.key);
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
+        var symmetricSecurityKey = new SymmetricSecurityKey(this.key);
+        var creds = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha512);
         var expires = DateTime.Now.AddMinutes(Convert.ToDouble(_config["Jwt:ExpiresInMinutes"]));
 
         var token = new JwtSecurityToken(
@@ -128,7 +115,9 @@ public class JwtService : IJwtService
 
         try
         {
+            Log.Information("break point on token");
             var principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+            Log.Information("break point on token validated");
             return principal;
         }
         catch (Exception ex)

@@ -1,25 +1,47 @@
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Application.DTOs.Responses;
+using WebApplication1.Application.DTOs.Requests;
+using WebApplication1.Application.DTOs.Responses;
 
-namespace DepartmentManagementApp.Application.Interfaces;
+namespace WebApplication1.Application.Interfaces;
 
 public interface IUserService
 {
-    UserResponse CreateUser(RegisterRequest request);
+    Task<UserResponseWithDepartments> CreateUser(RegisterRequest request);
 
-    UserResponse GetUserById(string id);
+    Task<UserResponseWithDepartments> GetUserById(string id);
 
-    UserResponse GetUserByEmail(string email);
+    Task<UserResponseWithDepartments> GetUserByEmail(string email);
 
-    UserResponse GetUserByUserName(string fullName);
+    Task<UserResponseWithDepartments> GetUserByUserName(string fullName);
 
-    UserResponse GetUserByPhoneNumber(string phoneNumber);
+    Task<UserResponseWithDepartments> GetUserByPhoneNumber(string phoneNumber);
 
-    IEnumerable<UserResponse> GetAllUsers();
+    Task<IEnumerable<UserResponseWithDepartments>> GetAllUsers();
+    
+    Task<IEnumerable<UserResponseWithDepartments>> GetAllUsersByRole(string role);
+    
+    Task<IEnumerable<UserResponseWithDepartments>> GetActiveUsers();
+    
+    Task<IEnumerable<UserResponseWithDepartments>> GetDeactivateUsers();
+    
+    Task<IEnumerable<UserResponseWithDepartments>> GetDeletedUsers();
+    
+    Task<string> ChangePassword(ChangePasswordRequest request);
 
-    string ChangePassword(string email, string oldPassword, string newPassword);
+    Task<UserResponseWithDepartments> AddDepartmentInUser(string userId, string departmentId);
+    
+    Task<UserResponseWithDepartments> RemoveDepartmentInUser(string userId, string departmentId);
+    
+    Task<UserResponseWithDepartments> ChangeUserSalary(string userId, int salary);
+    
+    Task<UserResponseWithDepartments> ChangeUserRole(string userId, string role);
+    
+    Task<UserResponseWithDepartments> DeactivateUser(string userId);
+    
+    Task<UserResponseWithDepartments> ActivateUser(string userId);
+    
+    Task<UserResponseWithDepartments?> VerifyUser(string userId, string code);
+    
+    Task<UserResponseWithDepartments> UpdateUser(string userId, UpdateUserRequest request);
 
-    UserResponse UpdateUser(string id, RegisterRequest request);
-
-    void DeleteUser(string id);
+    Task DeleteUser(string userId);
 }

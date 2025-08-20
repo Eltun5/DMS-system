@@ -1,17 +1,16 @@
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Application.DTOs.Responses;
-using DepartmentManagementApp.Domain.Models;
-using LoginRequest = DepartmentManagementApp.Application.DTOs.Requests.LoginRequest;
+using WebApplication1.Application.DTOs.Requests;
+using WebApplication1.Application.DTOs.Responses;
+using LoginRequest = WebApplication1.Application.DTOs.Requests.LoginRequest;
 
-namespace DepartmentManagementApp.Application.Interfaces;
+namespace WebApplication1.Application.Interfaces;
 
 public interface IAuthService
 {
-    Task<LoginResponse> login(LoginRequest request);
+    Task<LoginResponse> Login(LoginRequest request);
     
-    UserResponse register(RegisterRequest request);
+    Task<UserResponseWithDepartments> Register(RegisterRequest request);
     
-    Task<LoginResponse> refreshToken(string refreshToken);
+    Task<LoginResponse> RefreshToken(string refreshToken);
     
-    Task logout(string refreshToken);
+    Task Logout(string refreshToken);
 }

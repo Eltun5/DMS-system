@@ -1,92 +1,100 @@
-using DepartmentManagementApp.Application.DTOs.Requests;
-using DepartmentManagementApp.Application.DTOs.Responses;
-using DepartmentManagementApp.Application.Interfaces;
-using DepartmentManagementApp.Infrastructure.Interfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Serilog;
-using LoginRequest = DepartmentManagementApp.Application.DTOs.Requests.LoginRequest;
+using WebApplication1.Application.DTOs.Requests;
+using WebApplication1.Application.DTOs.Responses;
+using WebApplication1.Application.Interfaces;
+using WebApplication1.Infrastructure.DBContext;
+using WebApplication1.Infrastructure.Interfaces;
+using LoginRequest = WebApplication1.Application.DTOs.Requests.LoginRequest;
 
-namespace DepartmentManagementApp.Application.Service;
+namespace WebApplication1.Application.Service;
 
-public class AuthService : IAuthService
+public class AuthService(
+    IUserRepository userRepository,
+    IJwtService jwtService,
+    IUserService userService,
+    IConfiguration config,
+    IRedisService redisService,
+    AppDbContext dbContext)
+    : IAuthService
 {
-    private readonly IRedisTokenService _redisTokenService;
-
-    private readonly IUserRepository _userRepository;
-
-    private readonly IJwtService _jwtService;
-
-    private readonly IUserService _userService;
-
-    private readonly IConfiguration _config;
-
-    public AuthService(IUserRepository userRepository, IJwtService jwtService, IUserService userService,
-        IConfiguration config, IRedisTokenService redisTokenService)
+    public async Task<LoginResponse> Login(LoginRequest request)
     {
-        _userRepository = userRepository;
-        _jwtService = jwtService;
-        _userService = userService;
-        _config = config;
-        _redisTokenService = redisTokenService;
-    }
+        Log.Information(config["log:auth:service:login"] + request.Email);
 
-    public async Task<LoginResponse> login(LoginRequest request)
-    {
-        Log.Information(_config["log:auth:service:login"] + request.Email);
-
-        var user = _userRepository.GetUserByEmail(request.Email);
+        var user = await userRepository.GetUserByEmail(request.Email);
 
         if (user == null)
         {
-            Log.Information(_config["log:auth:service:login:user-not-found-by-email"] + request.Email);
-            throw new ArgumentException(_config["log:auth:service:login:user-not-found-by-email"] + request.Email);
+            Log.Information(config["log:auth:service:login:user-not-found-by-email"] + request.Email);
+            throw new ArgumentException(config["log:auth:service:login:user-not-found-by-email"] + request.Email);
         }
 
-        if (DateTime.Now.AddMonths(1) <= user.nextTimeToChangePassword)
+        if (DateTime.Now.AddMonths(1) <= user.NextTimeToChangePassword)
         {
-            Log.Information(_config["log:auth:service:login:password-is-expired"]!);
-            throw new ArgumentException(_config["log:auth:service:login:password-is-expired"]!);
+            Log.Information(config["log:auth:service:login:password-is-expired"]!);
+            throw new ArgumentException(config["log:auth:service:login:password-is-expired"]!);
         }
 
         if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
         {
-            Log.Information(_config["log:auth:service:login:wrong-password"]!);
-            throw new ArgumentException(_config["log:auth:service:login:wrong-password"]!);
+            Log.Information(config["log:auth:service:login:wrong-password"]!);
+            throw new ArgumentException(config["log:auth:service:login:wrong-password"]!);
         }
 
-        var loginResponse = _jwtService.GenerateToken(user);
+        if (user.IsDeleted || !user.IsActive || !user.IsVerified)
+        {
+            Log.Information(config["log:auth:service:login:invalid-user-status"]!);
+            throw new ArgumentException(config["log:auth:service:login:invalid-user-status"]!);
+        }
+
+        var loginResponse = jwtService.GenerateToken(user);
 
         await StoreRefreshTokenAsync(user.Id.ToString(), loginResponse.RefreshToken);
 
+        var newUser = await userRepository.GetById(user.Id.ToString());
+        if (newUser == null) throw new BadHttpRequestException("User not found");
+        newUser.LastLogin = DateTime.Now;
+        dbContext.Update(newUser);
+        await dbContext.SaveChangesAsync();
+        
         return loginResponse;
     }
 
-    public async Task<LoginResponse> refreshToken(string refreshToken)
+    public async Task<LoginResponse> RefreshToken(string refreshToken)
     {
-        string? userId = _jwtService.getUserIdFromToken(refreshToken);
+        string? userId = jwtService.GetUserIdFromToken(refreshToken);
 
+        Log.Verbose("userId : " + userId);
+        
         if (userId != null && await ValidateRefreshTokenAsync(userId, refreshToken))
         {
-            var response = _jwtService.GenerateToken(_userRepository.GetUserById(userId));
-            await DeleteRefreshTokenAsync(userId);
-            await StoreRefreshTokenAsync(userId, response.RefreshToken);
-            return response;
+            var user = await userRepository.GetUserById(userId);
+            if (user != null)
+            {
+                var response = jwtService.GenerateToken(user);
+                await DeleteRefreshTokenAsync(userId);
+                await StoreRefreshTokenAsync(userId, response.RefreshToken);
+                return response;
+            }
         }
-        return null;
+
+        throw new BadHttpRequestException("User not found!!!");
     }
 
-    public UserResponse register(RegisterRequest request)
+    public async Task<UserResponseWithDepartments> Register(RegisterRequest request)
     {
-        Log.Information(_config["log:auth:service:register"] + request.Email);
-        return _userService.CreateUser(request);
+        Log.Information(config["log:auth:service:register"] + request.Email);
+        var userResponseWithDepartments = await userService.CreateUser(request);
+        
+        return userResponseWithDepartments;
     }
 
-    public async Task logout(string refreshToken)
+    public async Task Logout(string refreshToken)
     {
-        string? userId = _jwtService.getUserIdFromToken(refreshToken);
+        string? userId = jwtService.GetUserIdFromToken(refreshToken);
         if (userId != null)
         {
-            Log.Information(_config["log:auth:service:logout"] + userId);
+            Log.Information(config["log:auth:service:logout"] + userId);
             await DeleteRefreshTokenAsync(userId);
         }
     }
@@ -95,17 +103,17 @@ public class AuthService : IAuthService
     {
         var expiresIn = TimeSpan.FromDays(7);
 
-        await _redisTokenService.SetRefreshTokenAsync(userId, token, expiresIn);
+        await redisService.SetContentAsync(userId, "refresh_token",token, expiresIn);
     }
 
     private async Task<bool> ValidateRefreshTokenAsync(string userId, string providedToken)
     {
-        var storedToken = await _redisTokenService.GetRefreshTokenAsync(userId);
+        var storedToken = await redisService.GetContentAsync(userId, "refresh_token");
         return storedToken == providedToken;
     }
 
     private async Task DeleteRefreshTokenAsync(string userId)
     {
-        await _redisTokenService.DeleteRefreshTokenAsync(userId);
+        await redisService.DeleteContentAsync(userId, "refresh_token");
     }
 }
