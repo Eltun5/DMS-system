@@ -368,3 +368,6 @@
 /home/eltun/RiderProjects/DMS/DMS/obj/Debug/net9.0/DMS.pdb
 /home/eltun/RiderProjects/DMS/DMS/obj/Debug/net9.0/DMS.genruntimeconfig.cache
 /home/eltun/RiderProjects/DMS/DMS/obj/Debug/net9.0/ref/DMS.dll
+/home/eltun/RiderProjects/DMS/DMS/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
+/home/eltun/RiderProjects/DMS/DMS/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/home/eltun/RiderProjects/DMS/DMS/bin/Debug/net9.0/Swashbuckle.AspNetCore.Annotations.dll

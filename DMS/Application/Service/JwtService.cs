@@ -44,22 +44,6 @@ public class JwtService : IJwtService
 
         return null;
     }
-    
-    public string? GetEmailFromToken(string token)
-    {
-        var decodedPrincipal = DecodeJwtToken(token);
-
-        if (decodedPrincipal != null)
-        {
-            var email = decodedPrincipal.FindFirst(ClaimTypes.Email)?.Value;
-
-            Log.Information(_config["log:Jwt:get-email"] + email);
-
-            return email;
-        }
-
-        return null;
-    }
 
     private string GenerateAccessToken(User user)
     {

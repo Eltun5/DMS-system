@@ -100,21 +100,21 @@ public class UserService(IMapper mapper,
     public async Task<string> ChangePassword(ChangePasswordRequest request)
     {
         Log.Information(config["log:user:service:change-password:try"]!);
-        var user = await userRepository.GetById(request.userId);
+        var user = await userRepository.GetById(request.UserId);
         
         if (user == null)
         {
-            Log.Information(config["log:user:service:change-password:user-not-found-by-user-id"]! + request.userId);
+            Log.Information(config["log:user:service:change-password:user-not-found-by-user-id"]! + request.UserId);
             throw new ArgumentException("User is not found.");
         }
 
-        if (!BCrypt.Net.BCrypt.Verify(request.oldPassword, user.Password))
+        if (!BCrypt.Net.BCrypt.Verify(request.OldPassword, user.Password))
         {
             Log.Information(config["log:user:service:change-password:wrong-old-password"]!);
             throw new ArgumentException(config["log:user:service:change-password:wrong-old-password-exception"]!);
         }
         
-        user.Password = BCrypt.Net.BCrypt.HashPassword(request.newPassword);
+        user.Password = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
         user.NextTimeToChangePassword = DateTime.Now.AddDays(30);
         user.UpdatedAt = DateTime.Now;
         

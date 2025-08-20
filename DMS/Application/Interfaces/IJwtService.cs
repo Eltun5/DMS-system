@@ -8,6 +8,4 @@ public interface IJwtService
     LoginResponse GenerateToken(User user);
     
     string? GetUserIdFromToken(string token);
-    
-    string? GetEmailFromToken(string token);
 }
