@@ -1,3 +1,11 @@
-/DMS.sln
-*/obj
-/DMS/Logs
+# Build results
+bin/
+obj/
+Logs/
+
+# Rider/IDE files
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
