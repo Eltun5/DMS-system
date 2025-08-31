@@ -19,7 +19,6 @@ public class CustomBackgroundService : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            Log.Information(_config["log:background-service:try"]!);
             using var scope = _serviceProvider.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
@@ -42,11 +41,6 @@ public class CustomBackgroundService : BackgroundService
         {
             db.UserPasswordHistories.RemoveRange(oldUserPasswordHistories);
             db.SaveChangesAsync();
-            Log.Information(_config["log:background-service:clean-password:success"]!);
-        }
-        else
-        {
-            Log.Information(_config["log:background-service:clean-password:nothing-to-clean"]!);
         }
     }
 
@@ -62,7 +56,6 @@ public class CustomBackgroundService : BackgroundService
 
         if (employees.Any())
         {
-            Log.Information(_config["log:background-service:pay-employees-salary"]! + employees.Count);
             foreach (User employee in employees)
             {
                 employee.LastPaidDate = DateTime.Now;

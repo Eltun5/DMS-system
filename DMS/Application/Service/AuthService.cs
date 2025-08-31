@@ -19,8 +19,6 @@ public class AuthService(
 {
     public async Task<LoginResponse> Login(LoginRequest request)
     {
-        Log.Information(config["log:auth:service:login"] + request.Email);
-
         var user = await userRepository.GetUserByEmail(request.Email);
 
         if (user == null)
@@ -83,7 +81,6 @@ public class AuthService(
 
     public async Task<UserResponseWithDepartments> Register(RegisterRequest request)
     {
-        Log.Information(config["log:auth:service:register"] + request.Email);
         var userResponseWithDepartments = await userService.CreateUser(request);
         
         return userResponseWithDepartments;

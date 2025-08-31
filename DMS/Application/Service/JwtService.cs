@@ -115,9 +115,7 @@ public class JwtService : IJwtService
 
         try
         {
-            Log.Information("break point on token");
             var principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
-            Log.Information("break point on token validated");
             return principal;
         }
         catch (Exception ex)

@@ -11,7 +11,7 @@ namespace WebApplication1.API.Controllers;
 [ApiController]
 [Route("api/v1/department")]
 [SwaggerTag("API controller for managing department-related operations.")]
-public class DepartmentController(IDepartmentService departmentService)
+public class DepartmentController(IDepartmentService departmentService) : ControllerBase
 {
     [HttpPost]
     [Authorize(Roles = "Admin, Manager")]
