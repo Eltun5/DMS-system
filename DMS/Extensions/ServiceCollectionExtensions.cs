@@ -75,7 +75,7 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddSignalR();
-        services.AddSingleton<IUserIdProvider, IdBasedUserIdProvider>();
+        services.AddScoped<IUserIdProvider, IdBasedUserIdProvider>();
 
         services.AddSwaggerGen(options =>
         {
