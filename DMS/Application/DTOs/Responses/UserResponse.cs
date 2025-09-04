@@ -7,7 +7,7 @@ public record UserResponse(
     string Id,
     string FullName,
     string Email,
-    int age,
+    int Age,
     string PhoneNumber,
     [property: JsonConverter(typeof(JsonStringEnumConverter))]
     Role Role,
@@ -17,6 +17,6 @@ public record UserResponse(
     bool IsActive,
     bool IsVerified,
     bool IsDeleted,
-    DateTime nextTimeToChangePassword,
+    DateTime NextTimeToChangePassword,
     DateTime CreatedAt,
     DateTime UpdatedAt);

@@ -1,25 +1,39 @@
-using System.Net;
-using System.Net.Mail;
+using MailKit.Net.Smtp;
+using MimeKit;
 using WebApplication1.Application.Interfaces;
 
 namespace WebApplication1.Application.Service;
-
-public class EmailService(IConfiguration configuration) : IEmailService
+    
+public class EmailService : IEmailService
 {
-    public Task SendEmailAsync(string email, string subject, string message)
-    {
-        var client = new SmtpClient(configuration["SmtpSettings:Host"], int.Parse(configuration["SmtpSettings:Port"]!))
-        {
-            EnableSsl = true,
-            UseDefaultCredentials = false,
-            Credentials = new NetworkCredential(configuration["SmtpSettings:Username"], configuration["SmtpSettings:Password"])
-        };
+    private readonly IConfiguration _configuration;
 
-        return client.SendMailAsync(
-            new MailMessage(from: configuration["SmtpSettings:Username"]!,
-                to: email,
-                subject,
-                message
-            ));
+    public EmailService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
+    public async Task SendEmailAsync(string email, string subject, string message)
+    {
+        var emailMessage = new MimeMessage();
+        emailMessage.From.Add(new MailboxAddress("DMS", _configuration["SmtpSettings:Username"]));
+        emailMessage.To.Add(new MailboxAddress("", email));
+        emailMessage.Subject = subject;
+        emailMessage.Body = new TextPart("html") { Text = message };
+
+        using var client = new SmtpClient();
+        await client.ConnectAsync(
+            _configuration["SmtpSettings:Host"], 
+            int.Parse(_configuration["SmtpSettings:Port"]!), 
+            MailKit.Security.SecureSocketOptions.StartTls
+        );
+
+        await client.AuthenticateAsync(
+            _configuration["SmtpSettings:Username"], 
+            _configuration["SmtpSettings:Password"]
+        );
+
+        await client.SendAsync(emailMessage);
+        await client.DisconnectAsync(true);
     }
 }

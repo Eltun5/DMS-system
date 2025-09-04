@@ -42,8 +42,6 @@ public class CustomMapper: Profile
                 src.UpdatedAt ?? src.CreatedAt 
             ));
         
-        CreateMap<RegisterRequest, User>();
-        
         CreateMap<Department, DepartmentResponseWithUsers>()
             .ConstructUsing((src, ctx) => new DepartmentResponseWithUsers(
                 src.Id.ToString(),

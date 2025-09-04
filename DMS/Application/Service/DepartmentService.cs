@@ -19,8 +19,6 @@ public class DepartmentService(
 
     public async Task<string> CreateDepartment(DepartmentRequest request)
     { 
-        Log.Information(config["log:department:service:create:try"]!);
-        
         if (!await VerifyCanExistDepartmentWithThisField(request))
         {
             return config["log:department:service:create:failed"]!;
@@ -29,38 +27,32 @@ public class DepartmentService(
         var department = await InitializeDepartment(request);
 
         await departmentRepository.CreateDepartment(department);
-        Log.Information(config["log:department:service:create:success"]!);
         return config["log:department:service:create:success"]!;
     }
 
     public async Task<DepartmentResponseWithUsers> GetDepartmentById(string id)
     {
-        Log.Information(config["log:department:service:get-by-id"]!);
         return mapper.Map<DepartmentResponseWithUsers>( await departmentRepository.GetDepartmentById(id));
     }
 
     public async Task<DepartmentResponseWithUsers> GetDepartmentByName(string name)
     {
-        Log.Information(config["log:department:service:get-by-name"]!);
         return mapper.Map<DepartmentResponseWithUsers>( await departmentRepository.GetDepartmentByName(name));
     }
 
     public async Task<IEnumerable<DepartmentResponseWithUsers>> GetAllDepartments()
     {
-        Log.Information(config["log:department:service:all-departments"]!);
         IEnumerable<Department> allDepartments = await departmentRepository.GetAllDepartments();
         return mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentResponseWithUsers>>(allDepartments);
     }
 
     public async Task<IEnumerable<DepartmentResponseWithUsers>> GetActiveDepartments()
     {
-        Log.Information(config["log:department:service:get-active-departments"]!);
         return mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentResponseWithUsers>>( await departmentRepository.GetActiveDepartments());
     }
 
     public async Task<string> UpdateDepartment(string departmentId, DepartmentRequest request)
     {
-        Log.Information(config["log:department:service:update:try"]!);
         Department? oldDepartment = await departmentRepository.GetDepartmentById(departmentId);
         if (!await VerifyCanExistDepartmentWithThisField(request) || oldDepartment == null)
         {
@@ -68,32 +60,33 @@ public class DepartmentService(
             return config["log:department:service:update:failed"]!;
         }
         Department department = await UpdateDepartment(request, oldDepartment);
+        var oldDepartmentEmployees = oldDepartment.Employees;
+        oldDepartment.Employees = new List<User>();
         await departmentRepository.UpdateDepartment(department);
-        Log.Information(config["log:department:service:update:success"]!);
+        for (int i = 0; i < oldDepartmentEmployees.Count; i++)
+        {
+            await AddEmployeeInDepartment(oldDepartmentEmployees.ElementAt(i).Id.ToString(), oldDepartment.Id.ToString());
+        }
         return config["log:department:service:update:success"]!;
     }
 
     public async Task<DepartmentResponseWithUsers> AddEmployeeInDepartment(string departmentId, string employeeId)
     {
-        Log.Information(config["log:department:service:add-employee"]!);
         return mapper.Map<DepartmentResponseWithUsers>(await departmentRepository.AddEmployeeInDepartment(departmentId, employeeId));
     }
 
     public async Task<DepartmentResponseWithUsers> RemoveEmployeeFromDepartment(string departmentId, string employeeId)
     {
-        Log.Information(config["log:department:service:remove-employee"]!);
         return mapper.Map<DepartmentResponseWithUsers>(await departmentRepository.RemoveEmployeeFromDepartment(departmentId, employeeId));
     }
 
     public async Task DeactivateDepartment(string id)
     {
-        Log.Information(config["log:department:service:deactivate"]!);
         await departmentRepository.DeactivateDepartment(id);
     }
 
     public async Task ActivateDepartment(string id)
     {
-        Log.Information(config["log:department:service:activate"]!);
         await departmentRepository.ActivateDepartment(id);
     }
 

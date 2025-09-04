@@ -3,43 +3,43 @@ using System.ComponentModel.DataAnnotations;
 using Swashbuckle.AspNetCore.Annotations;
 
 public record RegisterRequest(
-    [property: Required]
-    [property: StringLength(50, MinimumLength = 3)]
-    [property: DefaultValue("John Doe")]
-    [property: SwaggerSchema(Description = "User's full name")]
-    string FullName = "John Doe",
+    [Required]
+    [StringLength(50, MinimumLength = 3)]
+    [DefaultValue("John Doe")]
+    [SwaggerSchema(Description = "User's full name")]
+    string FullName,
 
-    [property: Required]
-    [property: EmailAddress]
-    [property: DefaultValue("test@example.com")]
-    [property: SwaggerSchema(Description = "User email")]
-    string Email = "test@example.com",
+    [Required]
+    [EmailAddress]
+    [DefaultValue("test@example.com")]
+    [SwaggerSchema(Description = "User email")]
+    string Email,
 
-    [property: Required]
-    [property: StringLength(100, MinimumLength = 6)]
-    [property: DefaultValue("P@ssw0rd123")]
-    [property: SwaggerSchema(Description = "User password")]
-    string Password = "P@ssw0rd123",
+    [Required]
+    [StringLength(100, MinimumLength = 6)]
+    [DefaultValue("P@ssw0rd123")]
+    [SwaggerSchema(Description = "User password")]
+    string Password,
 
-    [property: Range(1, 120)]
-    [property: DefaultValue(25)]
-    [property: SwaggerSchema(Description = "User age")]
-    int Age = 25,
+    [Range(1, 120)]
+    [DefaultValue(25)]
+    [SwaggerSchema(Description = "User age")]
+    int Age,
 
-    [property: Required]
-    [property: Phone]
-    [property: DefaultValue("+994501234567")]
-    [property: SwaggerSchema(Description = "User phone number")]
-    string PhoneNumber = "+994501234567",
+    [Required]
+    [Phone]
+    [DefaultValue("+994501234567")]
+    [SwaggerSchema(Description = "User phone number")]
+    string PhoneNumber,
 
-    [property: Required]
-    [property: StringLength(100)]
-    [property: DefaultValue("Baku, Azerbaijan")]
-    [property: SwaggerSchema(Description = "User location")]
-    string Location = "Baku, Azerbaijan",
+    [Required]
+    [StringLength(100)]
+    [DefaultValue("Baku, Azerbaijan")]
+    [SwaggerSchema(Description = "User location")]
+    string Location,
 
-    [property: StringLength(500)]
-    [property: DefaultValue("Additional info about user")]
-    [property: SwaggerSchema(Description = "Additional user info")]
-    string AdditionalInfo = "Additional info about user"
+    [StringLength(500)]
+    [DefaultValue("Additional info about user")]
+    [SwaggerSchema(Description = "Additional user info")]
+    string AdditionalInfo
 );
