@@ -60,7 +60,13 @@ public class DepartmentService(
             return config["log:department:service:update:failed"]!;
         }
         Department department = await UpdateDepartment(request, oldDepartment);
+        var oldDepartmentEmployees = oldDepartment.Employees;
+        oldDepartment.Employees = new List<User>();
         await departmentRepository.UpdateDepartment(department);
+        for (int i = 0; i < oldDepartmentEmployees.Count; i++)
+        {
+            await AddEmployeeInDepartment(oldDepartmentEmployees.ElementAt(i).Id.ToString(), oldDepartment.Id.ToString());
+        }
         return config["log:department:service:update:success"]!;
     }
 

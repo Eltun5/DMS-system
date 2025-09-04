@@ -179,25 +179,41 @@ public class UserService(IMapper mapper,
     private void VerifyCanCreateUserWithThisField(RegisterRequest request)
     {
         if (userRepository.ExistsByEmail(request.Email))
-            throw new ArgumentException(config["log:user:service:create:email"]!);
+        {
+            Log.Information(config["log:user:service:create:exist:email"]!);
+            throw new ApplicationException(config["log:user:service:create:exist:email"]!);
+        }
+
 
         if (userRepository.ExistsByFullName(request.FullName))
-            throw new ArgumentException(config["log:user:service:create:full-name"]!);
+        {
+            Log.Information(config["log:user:service:create:exist:full-name"]!);
+            throw new ApplicationException(config["log:user:service:create:exist:full-name"]!);
 
-        if (userRepository.ExistsByPhoneNumber(request.PhoneNumber))
-            throw new ArgumentException(config["log:user:service:create:phone-number"]!);
+        }
+
+        if (userRepository.ExistsByPhoneNumber(request.PhoneNumber)){
+            Log.Information(config["log:user:service:create:exist:email"]!);
+            throw new ApplicationException(config["log:user:service:create:exist:email"]!);
+        }
     }
 
     private User InitializeUser(RegisterRequest request)
     {
-        User user = mapper.Map<User>(request);
+        User user = new User();
         user.Id = Guid.NewGuid();
+        user.FullName = request.FullName;
+        user.Email = request.Email;
+        user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
+        user.Age = request.Age;
+        user.PhoneNumber = request.PhoneNumber;
+        user.Location = request.Location;
+        user.AdditionalInfo = request.AdditionalInfo;
         user.CreatedAt = DateTime.Now;
         user.IsActive = true;
         user.IsDeleted = false;
         user.IsVerified = false;
         user.Salary = 0;
-        user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
         user.NextTimeToChangePassword = DateTime.Now.AddDays(30);
         user.Role = Role.Employee;
         return user;

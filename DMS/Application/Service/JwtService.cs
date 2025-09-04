@@ -13,12 +13,12 @@ public class JwtService : IJwtService
 {
     private readonly IConfiguration _config;
 
-    private readonly byte[] key;
+    private readonly byte[] _key;
 
     public JwtService(IConfiguration config)
     {
         _config = config;
-        key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]!);
+        _key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]!);
     }
 
     public LoginResponse GenerateToken(User user)
@@ -55,7 +55,7 @@ public class JwtService : IJwtService
             new Claim(ClaimTypes.Email, user.Email)
         };
 
-        var symmetricSecurityKey = new SymmetricSecurityKey(this.key);
+        var symmetricSecurityKey = new SymmetricSecurityKey(this._key);
         var creds = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha512);
         var expires = DateTime.Now.AddMinutes(Convert.ToDouble(_config["Jwt:ExpiresInMinutes"]));
 
@@ -82,7 +82,7 @@ public class JwtService : IJwtService
             new Claim(ClaimTypes.Email, user.Email)
         };
 
-        var symmetricSecurityKey = new SymmetricSecurityKey(this.key);
+        var symmetricSecurityKey = new SymmetricSecurityKey(this._key);
         var creds = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha512);
         var expires = DateTime.Now.AddMinutes(Convert.ToDouble(_config["Jwt:ExpiresInMinutes"]));
 
@@ -107,7 +107,7 @@ public class JwtService : IJwtService
         var validationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(key),
+            IssuerSigningKey = new SymmetricSecurityKey(_key),
             ValidateIssuer = false,
             ValidateAudience = false,
             ClockSkew = TimeSpan.Zero

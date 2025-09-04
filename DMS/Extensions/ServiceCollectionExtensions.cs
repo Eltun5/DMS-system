@@ -62,6 +62,27 @@ public static class ServiceCollectionExtensions
                         }
 
                         return Task.CompletedTask;
+                    },
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            context.Response.ContentType = "application/json";
+                            return context.Response.WriteAsync("{\"error\":\"Token expired\"}");
+                        }
+
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        context.Response.ContentType = "application/json";
+                        return context.Response.WriteAsync("{\"error\":\"Invalid token\"}");
+                    },
+                    OnChallenge = context =>
+                    {
+                        context.HandleResponse();
+
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        context.Response.ContentType = "application/json";
+                        return context.Response.WriteAsync("{\"error\":\"Unauthorized\"}");
                     }
                 };
             });
@@ -75,7 +96,7 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddSignalR();
-        services.AddScoped<IUserIdProvider, IdBasedUserIdProvider>();
+        services.AddSingleton<IUserIdProvider, IdBasedUserIdProvider>();
 
         services.AddSwaggerGen(options =>
         {
